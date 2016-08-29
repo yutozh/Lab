@@ -1,9 +1,10 @@
 .zebra{
     margin: 2rem auto;
+    font-size: 1.1rem;
 }
 .zebra td, .zebra th {
-    padding: 10px;
-    border-bottom: 1px solid #f2f2f2;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(247, 247, 247, 0.1);
 }
 
 .zebra tbody tr:nth-child(even) {
@@ -21,6 +22,7 @@
 
 .zebra th {
     text-align: center;
+    font-size: 1.5rem;
     text-shadow: 0 1px 0 rgba(255,255,255,.5);
     border-bottom: 1px solid #ccc;
     background-color: #4beecd;
