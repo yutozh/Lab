@@ -66,8 +66,8 @@ $("#input_btn").click(function () {
                     htmlContent += item;
                     price += parseFloat(data[p][1][3])
                 }
-                htmlRes = '<p style="margin-bottom: 1rem">\
-        亲爱的<span id="username">' + username +'</span>同学,以下是你的教材预定情况:\
+                htmlRes = '<p style="margin-bottom: 1rem; font-size: large" class="css57a75d021161c8">\
+        亲爱的<span id="username" style="font-size: medium">' + username +'</span>同学,以下是你的教材预定情况:\
     </p>\
                 <table class="zebra">\
         <thead>\
