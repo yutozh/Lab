@@ -99,6 +99,7 @@ def makeEmail():
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         print "Add args 'user' for readUserInfo(),'book' for readBookInfo()."
+        exit(1)
     func = sys.argv[1]
     if func == 'user':
         readUserInfo()
