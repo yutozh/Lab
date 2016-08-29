@@ -1,7 +1,6 @@
 # coding=utf8
 
 from app import db
-from flask.ext.sqlalchemy import SQLAlchemy
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

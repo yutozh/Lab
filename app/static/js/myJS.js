@@ -6,7 +6,7 @@ $(window).ready(
     resize()
 );
 
-window.addEventListener("resize", resize, false);
+// window.addEventListener("resize", resize, false);
 
 function resize() {
 
