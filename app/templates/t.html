@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+
+.zebra td, .zebra th {
+    padding: 10px;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.zebra tbody tr:nth-child(even) {
+    background: #70f5e5;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+}
+.zebra tbody tr:nth-child(odd) {
+    background: #cbebf5;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+}
+
+.zebra th {
+    text-align: left;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+    border-bottom: 1px solid #ccc;
+    background-color: #4beecd;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#7af5e5), to(#5cbeee));
+    background-image: -webkit-linear-gradient(top, #7af5e5, #5cbeee);
+    background-image:    -moz-linear-gradient(top, #7af5e5, #5cbeee);
+    background-image:     -ms-linear-gradient(top, #7af5e5, #5cbeee);
+    background-image:      -o-linear-gradient(top, #7af5e5, #5cbeee);
+    background-image:         linear-gradient(top, #7af5e5, #5cbeee);
+}
+
+.zebra th:first-child {
+    -moz-border-radius: 6px 0 0 0;
+    -webkit-border-radius: 6px 0 0 0;
+    border-radius: 6px 0 0 0;
+}
+
+.zebra th:last-child {
+    -moz-border-radius: 0 6px 0 0;
+    -webkit-border-radius: 0 6px 0 0;
+    border-radius: 0 6px 0 0;
+}
+
+.zebra th:only-child{
+    -moz-border-radius: 6px 6px 0 0;
+    -webkit-border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0;
+}
+
+.zebra tfoot td {
+    border-bottom: 0;
+    border-top: 1px solid #fff;
+    background-color: #f1d8b1;
+}
+
+.zebra tfoot td:first-child {
+    -moz-border-radius: 0 0 0 6px;
+    -webkit-border-radius: 0 0 0 6px;
+    border-radius: 0 0 0 6px;
+}
+
+.zebra tfoot td:last-child {
+    -moz-border-radius: 0 0 6px 0;
+    -webkit-border-radius: 0 0 6px 0;
+    border-radius: 0 0 6px 0;
+}
+
+.zebra tfoot td:only-child{
+    -moz-border-radius: 0 0 6px 6px;
+    -webkit-border-radius: 0 0 6px 6px;
+    border-radius: 0 0 6px 6px;
+}
+#booknum{
+    color: deepskyblue;
+    font-size: large;
+    font-weight: bold;
+}
+#bookprice{
+    color: deeppink;
+    font-size: larger;
+}
+#username{
+    color: purple;
+}
+</style>
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    <p style="margin-bottom: 15px">
+        亲爱的<span id="username">霍云鹏</span>同学,以下是你的教材预定情况:
+    </p>
+</div>
+<div>
+    <table class="zebra">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>书名</th>
+                <th>折后价</th>
+            </tr>
+        </thead>
+
+        <tfoot>
+
+        </tfoot>
+
+        <tbody>
+
+            <tr style="position: relative">
+                <td>0</td>
+                <td>《GPS测量与数据处理》</td>
+                <td style="position: absolute;right: 1px">21.25</td>
+            </tr>
+
+            <tr style="position: relative">
+                <td>1</td>
+                <td>《地图学》</td>
+                <td style="position: absolute;right: 1px">8.40</td>
+            </tr>
+
+            <tr style="position: relative">
+                <td>2</td>
+                <td>《遥感原理与应用》</td>
+                <td style="position: absolute;right: 1px">36.00</td>
+            </tr>
+
+            <tr style="position: relative">
+                <td>3</td>
+                <td>《程序设计基础-Fortran 95》</td>
+                <td style="position: absolute;right: 1px">18.96</td>
+            </tr>
+
+            <tr style="position: relative">
+                <td>4</td>
+                <td>《三维空间数据的实时获取、建模与可视化》</td>
+                <td style="position: absolute;right: 1px">22.68</td>
+            </tr>
+
+            <tr style="position: relative">
+                <td>6</td>
+                <td>《城市灾害应急管理》</td>
+                <td style="position: absolute;right: 1px">18.00</td>
+            </tr>
+
+            <tr style="position: relative">
+                <td>7</td>
+                <td>《地理信息系统数据库》</td>
+                <td style="position: absolute;right: 1px">27.00</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+<p>dsfdsfdsfsdfdsfsdfdsfsdfsdfsdffd</p>
+<p>dsfdsfdsfsdfdsfsdfdsfsdfsdfsdffd</p>
+<p>dsfdsfdsfsdfdsfsdfdsfsdfsdfsdffd</p>
+<p>dsfdsfdsfsdfdsfsdfdsfsdfsdfsdffd</p>
+<div>
+    <p style="position: absolute; right: 0;margin-top: 20px">
+        总计<span id="booknum">7</span>本教材, 总价格
+        <span id="bookprice">152.29</span>元.
+</p>
+</div>
+<div style="margin-top: 80px;position: absolute; right: 0;">
+    <p>如有任何问题请及时联系我哦~<br>你们的学委^_^<br>2016.09.01</p>
+</div>
+</body>
+</html>

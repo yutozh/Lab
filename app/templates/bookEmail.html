@@ -1,0 +1,131 @@
+    <style>
+
+.zebra td, .zebra th {
+    padding: 10px;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.zebra tbody tr:nth-child(even) {
+    background: #70f5e5;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+}
+.zebra tbody tr:nth-child(odd) {
+    background: #cbebf5;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+}
+
+.zebra th {
+    text-align: left;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+    border-bottom: 1px solid #ccc;
+    background-color: #4beecd;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#7af5e5), to(#5cbeee));
+    background-image: -webkit-linear-gradient(top, #7af5e5, #5cbeee);
+    background-image:    -moz-linear-gradient(top, #7af5e5, #5cbeee);
+    background-image:     -ms-linear-gradient(top, #7af5e5, #5cbeee);
+    background-image:      -o-linear-gradient(top, #7af5e5, #5cbeee);
+    background-image:         linear-gradient(top, #7af5e5, #5cbeee);
+}
+
+.zebra th:first-child {
+    -moz-border-radius: 6px 0 0 0;
+    -webkit-border-radius: 6px 0 0 0;
+    border-radius: 6px 0 0 0;
+}
+
+.zebra th:last-child {
+    -moz-border-radius: 0 6px 0 0;
+    -webkit-border-radius: 0 6px 0 0;
+    border-radius: 0 6px 0 0;
+}
+
+.zebra th:only-child{
+    -moz-border-radius: 6px 6px 0 0;
+    -webkit-border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0;
+}
+
+.zebra tfoot td {
+    border-bottom: 0;
+    border-top: 1px solid #fff;
+    background-color: #f1d8b1;
+}
+
+.zebra tfoot td:first-child {
+    -moz-border-radius: 0 0 0 6px;
+    -webkit-border-radius: 0 0 0 6px;
+    border-radius: 0 0 0 6px;
+}
+
+.zebra tfoot td:last-child {
+    -moz-border-radius: 0 0 6px 0;
+    -webkit-border-radius: 0 0 6px 0;
+    border-radius: 0 0 6px 0;
+}
+
+.zebra tfoot td:only-child{
+    -moz-border-radius: 0 0 6px 6px;
+    -webkit-border-radius: 0 0 6px 6px;
+    border-radius: 0 0 6px 6px;
+}
+#booknum{
+    color: deepskyblue;
+    font-size: large;
+    font-weight: bold;
+}
+#bookprice{
+    color: deeppink;
+    font-size: larger;
+}
+#username{
+    color: purple;
+}
+</style>
+<div>
+    <p style="margin-bottom: 15px">
+        亲爱的<span id="username">{{username}}</span>同学,以下是你的教材预定情况:
+    </p>
+</div>
+<div>
+    <table class="zebra">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>书名</th>
+                <th>折后价</th>
+            </tr>
+        </thead>
+
+        <tfoot>
+
+        </tfoot>
+
+        <tbody>
+            {% for i,info in books %}
+            <tr style="position: relative">
+                <td>{{i}}</td>
+                <td>{{info[0]}}</td>
+                <td style="position: absolute;right: 1px">{{info[3]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div style="text-align: right;margin-top: 20px">
+    <p>
+        总计<span id="booknum">{{ booknum }}</span>本教材, 总价格
+        <span id="bookprice">{{ price }}</span>元.
+    </p>
+
+    <p style="margin-top: 80px;">
+        如有任何问题请及时联系我哦~<br>你们的学委^_^<br>2016.09.01
+    </p>
+
+</div>
+
+
+

@@ -1,0 +1,100 @@
+html {
+    font-size: 62.5%;
+}
+
+#background {
+    position: absolute;
+    text-align: center;
+    z-index: -1;
+}
+
+#backImg {
+    position: relative;
+}
+
+#title {
+    padding-top: 1.8rem;
+    font-size: 2.8rem;
+}
+
+#input_wrapper {
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+}
+
+#input {
+    background: rgba(181, 182, 186, 0.3);
+    text-align: center;
+    margin: 0 auto;
+    position: relative;
+}
+
+#form {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 15rem;
+}
+
+#input_name {
+    border: hidden;
+    background: rgba(244, 249, 243, 0.8);;
+    width: 75%;
+    height: 5rem;
+    text-align: center;
+    font-size: larger;
+}
+
+#input_btn {
+    width: 77%;
+    height: 4rem;
+    margin-top: 2rem;
+    border-radius: 1.5rem;
+    background: #5cbeee;
+    color: ghostwhite;
+    font-size: x-large;
+    font-weight: bolder;
+    border: none;
+}
+
+#prompt{
+    color: red;
+    font-size: larger;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+#foot {
+    margin: auto;
+    /*margin-top: 3rem;*/
+    text-align: center;
+    width: 100%;
+    color: rgba(0, 129, 238, 0.7);
+    font-weight: lighter;
+}
+
+#wholewrapper{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 998;
+    display: none;
+}
+.three-quarters-loader{
+    margin: auto;
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 15rem;
+}
