@@ -1,5 +1,8 @@
 html {
     font-size: 62.5%;
+    font-family: "Arial","Verdana","Lucida Family","Hiragino Sans GB", "Microsoft YaHei",
+             "WenQuanYi Micro Hei", sans-serif;
+
 }
 
 #background {
@@ -15,6 +18,9 @@ html {
 #title {
     padding-top: 1.8rem;
     font-size: 2.8rem;
+    text-shadow: #c170ff 2px 2px;
+    color: #5151de;
+
 }
 
 #input_wrapper {
@@ -56,7 +62,7 @@ html {
     border-radius: 1.5rem;
     background: #5cbeee;
     color: ghostwhite;
-    font-size: x-large;
+    font-size: larger;
     font-weight: bolder;
     border: none;
 }
@@ -70,7 +76,7 @@ html {
 
 #foot {
     margin: auto;
-    /*margin-top: 3rem;*/
+    margin-top: 1rem;
     text-align: center;
     width: 100%;
     color: rgba(0, 129, 238, 0.7);
@@ -97,4 +103,8 @@ html {
     bottom: 0;
     right: 0;
     height: 15rem;
+}
+#resTable{
+    overflow: auto;
+    height: 80%;
 }

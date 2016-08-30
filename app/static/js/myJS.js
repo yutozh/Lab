@@ -28,7 +28,7 @@ function resize() {
 
     var scale = parseInt(containerH) / imgHei;
     $("#background").css({"width": containerW, "height": containerH});
-    $("#input").css({"width": parseInt(imgWid) * 0.8, "height": parseInt(containerH) * 0.8});
+    $("#input").css({"width": parseInt(imgWid) * 0.9, "height": parseInt(containerH) * 0.85});
 }
 
 $("#input_btn").click(function () {
@@ -58,18 +58,18 @@ $("#input_btn").click(function () {
                 var htmlContent = '';
                 var price = 0.0;
                 for (var p in data) {
-             item='<tr style="position: relative">\
+             ite='<tr style="position: relative">\
                 <td>'+ data[p][0] +'</td>\
                 <td>'+ data[p][1][0]+'</td>\
-                <td style="position: absolute;right: 1px">'+ data[p][1][3]+'</td>\
+                <td>'+ data[p][1][3]+'</td>\
             </tr>';
-                    htmlContent += item;
+                    htmlContent += ite;
                     price += parseFloat(data[p][1][3])
                 }
-                htmlRes = '<p style="margin-bottom: 1rem; font-size: large" class="css57a75d021161c8">\
+                htmlRes = '<p style="margin-bottom: 1rem; font-size: large; font-family: "Microsoft YaHei"">\
         亲爱的<span id="username" style="font-size: medium">' + username +'</span>同学,以下是你的教材预定情况:\
     </p>\
-                <table class="zebra">\
+                <div id="resTable"><table class="zebra">\
         <thead>\
             <tr>\
                 <th>编号</th>\
@@ -82,7 +82,7 @@ $("#input_btn").click(function () {
         <tbody>'+
         htmlContent
                     +'</tbody>\
-    </table>\
+    </table></div>\
 <p>\
         总计<span id="booknum">' + data.length +'</span>本教材, 总价格\
         <span id="bookprice">'+ price.toFixed(2) +'</span>元.\
@@ -91,6 +91,7 @@ $("#input_btn").click(function () {
         如有任何问题请及时联系你们的学委哦~\
     </p>';
                 $(this).html(htmlRes);
+                $("#foot").html('');
                 $("#wholewrapper").fadeOut();
             }
         }
