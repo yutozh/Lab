@@ -8,12 +8,10 @@ import hashlib
 import pytesseract
 from PIL import Image
 from captcha import clearNoise, threshold
-import time
-import random
+
 from config import PATH
 from app.doc import createDocx
 
-import rsa
 reload(sys)
 sys.setdefaultencoding("utf-8")
 

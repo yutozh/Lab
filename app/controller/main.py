@@ -9,10 +9,6 @@ import json
 import rsa
 import urllib
 from config import PATH
-from flask_socketio import send, emit, disconnect
-import time
-import requests
-
 
 @app.route("/bookSearch", methods=["POST","GET"])
 def main():
