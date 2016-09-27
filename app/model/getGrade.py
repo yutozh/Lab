@@ -236,7 +236,10 @@ def cal(list, grade="2015"):
     (map(add, xx_grade["4.5"][0:int(i)]))
     (map(add, xx_grade["5.0"][0:int(j)]))
 
-    F1 = sum1/allpoint
+    if allpoint>0:
+        F1 = sum1/allpoint
+    else:
+        F1 = 0
     F2 = sum2 * 0.002
     F3 = F1 + F2
 

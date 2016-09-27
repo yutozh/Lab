@@ -28,17 +28,17 @@ function checkInput() {
     var wrapper = $('#wholewrapper');
     if (username == '') {
         $("#inputStuNum").focus();
-        alertShow("请输入学号!","danger");
+        alertShow("请输入学号!", "danger");
         return false;
     }
     if (password == '') {
         $("#inputPassword").focus();
-        alertShow("请输入密码!","danger");
+        alertShow("请输入密码!", "danger");
         return false;
     }
     if (($("#not_auto").attr('class')).toString().indexOf("active") > -1 && captcha == '') {
         $("#input_captcha").focus();
-        alertShow("请输入验证码!","danger");
+        alertShow("请输入验证码!", "danger");
         return false;
     }
     wrapper.fadeOut();
@@ -65,15 +65,15 @@ function onSubmit() {
             if (captchaResult[0] == false) {
 
                 if (captchaResult[1] == "-1") {
-                    alertShow("验证码错误","danger");
+                    alertShow("验证码错误", "danger");
                     captcha.val("");
                     captcha.focus();
                 } else if (captchaResult[1] == "-2") {
-                    alertShow("学号或密码错误","danger");
+                    alertShow("学号或密码错误", "danger");
                 } else if (captchaResult[1] == "-3") {
-                    alertShow("登陆超时","danger");
+                    alertShow("登陆超时", "danger");
                 } else {
-                    alertShow("未知错误,错误代码:" + captchaResult[1],"danger");
+                    alertShow("未知错误,错误代码:" + captchaResult[1], "danger");
                 }
                 changeCaptcha();
                 changeBtn("active");
@@ -98,13 +98,16 @@ function onSubmit() {
             var values = '0%';
             data = {"username": username, "password": password, "captcha": captcha};
             for (var i = 0; i < 5; i++) {
+                console.log(i);
                 values = (i * 20).toString() + '%';
                 bar.css({"width": values});
                 bar.text(values);
+
                 captchaResult = ajaxLogin(data);
+
                 if (captchaResult[0] == false) {
                     if (captchaResult[1] == "-2") {
-                        alertShow("学号或密码错误","danger");
+                        alertShow("学号或密码错误", "danger");
                         changeBtn("active");
                         initBar();
                         return false;
@@ -116,7 +119,7 @@ function onSubmit() {
                 }
                 if (i == 4) {
                     finishBar('danger');
-                    alertShow("自动识别失败,请重试或手动输入","danger");
+                    alertShow("自动识别失败,请重试或手动输入", "danger");
                     changeBtn("active");
                     return false;
                 }
@@ -136,14 +139,14 @@ function alertShow(info, type) {
     var wrapper = $('#wholewrapper');
     var div = $("#div_alert");
 
-    div.addClass("alert-"+type);
+    div.addClass("alert-" + type);
     alert.html(info);
     wrapper.fadeIn(100);
     setTimeout(function () {
         wrapper.fadeOut(200);
     }, 3000);
     setTimeout(function () {
-        div.removeClass("alert-"+type);
+        div.removeClass("alert-" + type);
     }, 3200);
 
 }
@@ -175,7 +178,7 @@ function changeBtn(status) {
 }
 
 function changeCaptcha() {
-    $("#img_captcha").attr("src","/image?a="+Math.random().toString());
+    $("#img_captcha").attr("src", "/image?a=" + Math.random().toString());
 }
 function ajaxLogin(data) {
     var res = [];
@@ -189,15 +192,14 @@ function ajaxLogin(data) {
 
         },
         success: function (result) {
-
             if (result.res == "false") {
                 res = [false, result.session];
                 console.log(res);
             } else {
-                alertShow("<span class='glyphicon glyphicon-ok-circle'> 验证成功,正在跳转中...","success");
+                alertShow("<span class='glyphicon glyphicon-ok-circle'> 验证成功,正在跳转中...", "success");
                 res = [true, result.session];
-                $.cookie("JID",result.JID);
-                $.cookie("name",result.nameLable);
+                $.cookie("JID", result.JID);
+                $.cookie("name", result.nameLable);
             }
         }
     });
@@ -223,17 +225,17 @@ baIy36lv5quAiH2ARHECRFoSqDp3QAUMTUHmmHeLMMfcUfmqhUccqHl7uuZKNsho\
 0B3G5AU7B7q7PqFcSZYq+dzW1zrkxoFuT9H4x66inFZGL7cK\
 -----END RSA PRIVATE KEY-----";
     crypt.setPrivateKey(pri_key);
-   var res =  crypt.decrypt(signature);
-    if (res != null){
+    var res = crypt.decrypt(signature);
+    if (res != null) {
         var list = res.split('|');
-        var info = "姓名:"+list[3]+"\n"+
-            "学号:" + list[4]+"\n"+
-            "必修:"+list[0]+"\n"+
-            "选修:"+list[1]+"\n"+
-            "总分:"+list[2];
-        alert("验证成功,详细信息如下:\n"+info);
-    }else {
-        alertShow("验证失败,请检查校验码是否完整","warning");
+        var info = "姓名:" + list[3] + "\n" +
+            "学号:" + list[4] + "\n" +
+            "必修:" + list[0] + "\n" +
+            "选修:" + list[1] + "\n" +
+            "总分:" + list[2];
+        alert("验证成功,详细信息如下:\n" + info);
+    } else {
+        alertShow("验证失败,请检查校验码是否完整", "warning");
     }
 }
 
@@ -244,19 +246,19 @@ function onGetSignature() {
 }
 
 $('#copySignature').zclip({
-        path: '/static/js/ZeroClipboard.swf',
-        copy: function(){//复制内容
-            return $("#privateInfo").text();
-        },
-        afterCopy: function(){//复制成功
-            alertShow("复制成功,直接去粘贴吧~","success");
-        }
+    path: '/static/js/ZeroClipboard.swf',
+    copy: function () {//复制内容
+        return $("#privateInfo").text();
+    },
+    afterCopy: function () {//复制成功
+        alertShow("复制成功,直接去粘贴吧~", "success");
+    }
 });
 
 function postForGrade(data) {
     // data 为CSRF
     setTimeout(function () {
-        window.location.href="/gradeDetail?csrf="+data;
+        window.location.href = "/gradeDetail?csrf=" + data;
     }, 2000);
 }
 

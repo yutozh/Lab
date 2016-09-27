@@ -48,6 +48,8 @@ def getDetail():
     username = request.cookies.get("username", '')
     name = request.cookies.get("name", '')
     csrf = request.args.get("csrf","")
+    if csrf == '':
+        return redirect("grade")
     gradeRes = parseGrade(MYcsrf=csrf, JID=JSESSIONID, username=username)
     name = urllib.unquote(name).encode("ISO-8859-1","ignore") # urlZ中文解码
 

@@ -41,7 +41,7 @@ body{
     font-weight: bolder;
 }
 #input_captcha{
-    min-width: 200px;
+    min-width: 130px;
     width: 30%;
     display: inline-block;
 }
