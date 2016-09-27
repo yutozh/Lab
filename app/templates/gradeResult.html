@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>加权平均分查询</title>
+    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="../static/css/bootstrap.css" rel="stylesheet">-->
+    <link href="../static/css/gradeCSS.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div id="wholewrapper">
+        <div class="alert alert-dismissable fade in main_alert" id="div_alert">
+            <p id="alert_text">验证码自动识别失败,请重试</p>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="div_head">
+                <div>
+                    <p id="p_title">
+                        <img src="../static/img/7.png" class="center-block" style="height: auto; width: auto\9; width:100%; max-width: 600px"><span style="font-size: small">奖学金评定专用</span>
+                    </p>
+                </div>
+                <div class="div_result">
+                    <p style="font-weight: bolder ; font-size: large; color: #3388ee">亲爱的 {{name}} 同学,你好~</p>
+                    <div class="tabtable">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="active"><a href="#zf" data-toggle="tab" role="tab">总分</a></li>
+                            <li><a href="#xq" data-toggle="tab" role="tab">详情</a></li>
+                            <li><a href="#xz" data-toggle="tab" role="tab">下载</a></li>
+                            <li><a href="#jy" data-toggle="tab" role="tab">校验</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="zf" role="tabpanel">
+                            <div id="div_zf">
+                                <p id="p_zf1">
+                                    <span class="label label-primary span_zf">必修课:</span>
+                                    {{statistics[0]}}
+                                </p>
+                                <p id="p_zf2">
+                                    <span class="label label-primary span_zf">选修课:</span>
+                                    {{statistics[1]}}
+                                </p>
+                                <p id="p_zf3">
+                                    <span class="label label-success span_zf">总&nbsp;&nbsp;&nbsp;&nbsp;分:</span>
+                                    {{statistics[2]}}
+                                </p>
+                            </div>
+                            <button type="btn" class="btn btn-block btn-info btn-lg" id="getSignature"
+                                    onclick="onGetSignature()">
+                                获取校验信息
+                            </button>
+                            <div class="panel panel-default" id="signaturePanel" style="display: none">
+                                <div class="panel-body">
+                                    <div id="privateInfo">
+                                        {{signature}}
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="btn" class="btn btn-warning btn-lg" id="copySignature" style="display: none">
+                                复制以上信息
+                            </button>
+                        </div>
+                        <div class="tab-pane fade" id="xq" role="tabpanel">
+                            <div id="div_xq">
+                                课程名称前标注有 <span class="glyphicon glyphicon-heart" style="font-size: small; color: hotpink"></span> 的为参与本次平均分计算的课程.
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center">序号</th>
+                                            <th class="text-center">课程名称</th>
+                                            <th class="text-center">成绩</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in grade %}
+                                        {% if item.grade >= 90 %}
+                                        <tr class="success">
+                                        {% elif item.grade <60 %}
+                                        <tr class="danger">
+                                        {% else %}
+                                        <tr class="info">
+                                        {% endif %}
+                                            <td>{{ loop.index }}</td>
+                                            <td>
+                                                {% if item.used == true %}
+                                                <span class="glyphicon glyphicon-heart" style="font-size: small; color: hotpink"></span>
+                                                {% endif %}
+                                                {{ item.name }}
+                                            </td>
+                                            <td>{{ item.grade }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="xz" role="tabpanel">
+                            <div id="div_xz">
+                                下载信息表:
+                                <img class="img_download_icon" src="../static/img/word_icon.jpg">
+                                <a href="/gradeDetail/getDoc?target={{username}}">结果_{{username}}.doc</a>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="jy" role="tabpanel">
+                            <div id="div_jy">
+                                <textarea class="form-control" rows="5" placeholder="请粘贴需要验证的信息..."
+                                          id="checkSignature"></textarea>
+                                <button type="btn" class="btn btn-block btn-info btn-lg" onclick="onCheckSignature()">
+                                    验证
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="div_foot">
+                        <div>
+                            <p>结果仅供参考,如有任何问题请及时反映</p>
+                            <p>Designed by ZYT. QQ:545023318</p>
+                            <p>总访问量: {{PV}}</p>
+                            <p style="font-size: small">感谢张宇同学为选修课成绩计算提供核心算法</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.0/jquery.cookie.js"></script>
+
+<!--<script src="../static/js/jquery-cookie.js"></script>-->
+
+<!--<script src="../static/js/bootstrap.js"></script>-->
+<script src="../static/js/jsencrypt.js"></script>
+<script src="//cdn.bootcss.com/zclip/1.1.2/jquery.zclip.min.js"></script>
+
+<script src="../static/js/gradeJS.js"></script>
+</html>

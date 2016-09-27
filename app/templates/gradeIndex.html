@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>加权平均分查询</title>
+    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="../static/css/bootstrap.css" rel="stylesheet">-->
+    <link href="../static/css/gradeCSS.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="container">
+    <div id="wholewrapper">
+                <div class="alert alert-dismissable fade in main_alert" id="div_alert">
+                    <p id="alert_text">验证码自动识别失败,请重试</p>
+                </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+
+            <div id="div_head">
+                <div>
+                    <p id="p_title">
+                        <img src="../static/img/7.png" class="center-block" style="height: auto; width: auto\9; width:100%; max-width: 600px"><span style="font-size: small">奖学金评定专用</span>
+                    </p>
+                </div>
+            </div>
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <div id="div_grade">
+                        <label for="select_grade" class="control-label">选择年级</label>
+                        <select class="input-sm" id="select_grade" name="select_grade">
+                            <option disabled>2013级</option>
+                            <option>2014级</option>
+                            <option disabled>2015级</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStuNum" class="col-sm-2 control-label">学号</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="inputStuNum" placeholder="输入你的学号..."/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword" class="col-sm-2 control-label">密码</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" id="inputPassword" placeholder="输入你的教务系统密码..."/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="savepass"/>在本地记住密码</label>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+            <div class="captcha col-sm-8 col-sm-offset-2">
+                <span class="control-label" id="span_captcha">验证码</span>
+            <div class="tabbable" id="tabs">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active" role="presentation" id='not_auto'>
+                        <a href="#sdsr" data-toggle="tab" role="tab">手动输入</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#zdsb" data-toggle="tab" role="tab">自动识别</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="sdsr" role="tabpanel">
+                        <img src="/image" width="120px" height="30px" id="img_captcha" onclick="changeCaptcha()">
+                        <input type="text" class="form-control" id="input_captcha" placeholder="点击图片更换...">
+                    </div>
+                    <div class="tab-pane fade" id="zdsb" role="tabpanel">
+                        <p id="p_auto">
+                            采用Tesseract-OCR提供的字符识别技术,单次识别成功率在30%左右. 考虑到服务器负载,每次提交系统至多将做5次尝试.
+                        </p>
+                        <p>当前成功率:{{rate}}%</p>
+                        <div class="progress active">
+                            <div class="progress-bar progress-bar-info" aria-valuenow="20" aria-valuemin="0"
+                                 aria-valuemax="100" style="width: 0" id="progress_bar">
+                                0%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+
+
+            <button type="button" class="btn btn-block btn-lg btn-info" onclick="onSubmit()" id="btn_submit">查询</button>
+            <div class="div_foot">
+                <div>
+                    <p>结果仅供参考,如有任何问题请及时反映</p>
+                    <p>Designed by ZYT. QQ:545023318</p>
+                    <p>总访问量: {{PV}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.0/jquery.cookie.js"></script>
+
+<!--<script src="../static/js/jquery-cookie.js"></script>-->
+
+<!--<script src="../static/js/bootstrap.js"></script>-->
+<script src="//cdn.bootcss.com/zclip/1.1.2/jquery.zclip.min.js"></script>
+
+<script src="../static/js/gradeJS.js"></script>
+<!--<script src="../static/js/socket-io.min.js"></script>-->
+</html>

@@ -1,0 +1,90 @@
+th{
+  text-align: center;
+}
+body{
+    font-family: 'Open Sans','Helvetica Neue',Arial,'Hiragino Sans GB','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif;
+    background: url("../img/cj_background.gif");
+}
+
+#wholewrapper{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: none;
+}
+
+.main_alert{
+    margin: auto;
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 280px;
+    height: 50px;
+    z-index: 999;
+    text-align: center;
+}
+
+#p_title{
+    font-size: 3rem;
+    color: black;
+    text-align: center;
+    margin: 1rem auto 2rem auto;
+}
+
+#span_captcha{
+    font-weight: bolder;
+}
+#input_captcha{
+    min-width: 200px;
+    width: 30%;
+    display: inline-block;
+}
+
+#p_auto{
+    font-size: x-small;
+}
+
+#div_grade{
+    min-width: 160px;
+    display: inline-block;
+    float: right;
+    margin-right: 8%;
+}
+.tab-content{
+    text-align: center;
+    margin: 20px auto 30px auto;
+}
+
+#div_zf{
+    font-size: large;
+}
+#checkSignature{
+    margin: 10px auto 30px auto;
+}
+.div_foot{
+    margin-top: 50px;
+    text-align: center;
+}
+.div_foot p{
+    color: rgba(19, 30, 238, 0.61);
+    text-shadow: gold 1px 1px 1px;
+    font-size: medium;
+    font-weight: bold;
+}
+#privateInfo{
+    word-wrap: break-word;
+}
+@media screen and (max-width: 600px) {
+    #div_grade{
+        min-width: 140px;
+        display: inline-block;
+        float: right;
+        margin-right: 10px;
+    }
+}

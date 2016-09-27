@@ -2,6 +2,7 @@
 
 SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost:3306/BookInfo?charset=utf8'
 
+PATH = ''
 MAIL_SERVER = 'smtp.exmail.qq.com'
 MAIL_PORT = 465
 MAIL_USE_SSL = True
