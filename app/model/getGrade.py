@@ -116,7 +116,7 @@ def login(username, password, captcha='', JSESSIONID=''):
     return (True,csrf,JID,name)
 
 
-def parseGrade(MYcsrf, JID, username):
+def parseGrade(MYcsrf, JID, username, year="2015"):
     # 获取成绩信息
     url_grade_final = url_grade.format(csrf=MYcsrf)
     cookie = {"JSESSIONID": JID}
@@ -144,7 +144,7 @@ def parseGrade(MYcsrf, JID, username):
         # print text[3].text
         # print text[9].text
         # print "**************************"
-    res_cal = cal(grade)
+    res_cal = cal(grade, year)
     statistics = res_cal[0:3]
     createDocx(grade, username)
     return (statistics,grade)
@@ -158,7 +158,7 @@ def cal(list, grade="2015"):
 
     for i in list:
         if u"必修" in i["type"] and float(i["grade"]) != 0 \
-                and i["year"] == grade and i["putong"] == u"普通":
+                and i["year"] == grade and (i["putong"] == u"普通" or i["putong"] == u"重修"):
            sum1 += float(i["point"]) * float(i["grade"])
            allpoint += float(i["point"])
            i["used"] = True

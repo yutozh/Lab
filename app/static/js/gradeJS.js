@@ -312,8 +312,9 @@ function onGetSignature() {
 
 function postForGrade(data) {
     // data 为CSRF
+    var year = $("#select_grade").val();
     setTimeout(function () {
-        window.location.href = "/gradeDetail?csrf=" + data;
+        window.location.href = "/gradeDetail?csrf=" + data+"&year="+year;
     }, 2000);
 }
 
