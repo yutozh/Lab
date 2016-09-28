@@ -7,7 +7,27 @@ $(document).ready(function () {
         $("#inputStuNum").val($.cookie("username"));
         $("#inputPassword").val($.cookie("password"));
     }
+    $('#copySignature').on('click', function (e) {
+        e.preventDefault();
+    }).zclip({
+    path: 'https://cdn.bootcss.com/zclip/1.1.2/ZeroClipboard.swf',
+    copy: function () {//复制内容
+        return $("#privateInfo").text();
+    },
+    afterCopy: function () {//复制成功
+        alertShow("复制成功,直接去粘贴吧~", "success");
+    }
 });
+
+    $(window).bind("scroll", function(){
+        var top = $(this).scrollTop(); // 当前窗口的滚动距离
+        var alert_box = $("#div_alert");
+        var m_t = alert_box.css("margin-top");
+        alert_box.css({"margin-top":(-25 + parseInt(top)).toString()+"px"});
+  });
+});
+
+
 
 function savePwd() {
     var username = $("#inputStuNum").val();
@@ -288,15 +308,7 @@ function onGetSignature() {
     $("#copySignature").show();
 }
 
-$('#copySignature').zclip({
-    path: 'js/ZeroClipboard.swf',
-    copy: function () {//复制内容
-        return $("#privateInfo").text();
-    },
-    afterCopy: function () {//复制成功
-        alertShow("复制成功,直接去粘贴吧~", "success");
-    }
-});
+
 
 function postForGrade(data) {
     // data 为CSRF

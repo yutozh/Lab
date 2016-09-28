@@ -19,12 +19,12 @@ body{
 }
 
 .main_alert{
-    margin: auto;
+    /*margin: auto;*/
     position: absolute !important;
     top: 50%;
     left: 50%;
-    bottom: 0;
-    right: 0;
+    /*bottom: 0;*/
+    /*right: 0;*/
     width: 280px;
     height: 50px;
     margin-top: -25px;
@@ -83,7 +83,18 @@ body{
 #privateInfo{
     word-wrap: break-word;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 500px) {
+    #div_grade{
+        min-width: 140px;
+        display: inline-block;
+        float: right;
+        margin-right: 10px;
+    }
+    .course_name{
+        font-size: x-small;
+    }
+}
+@media screen and (max-width: 650px) {
     #div_grade{
         min-width: 140px;
         display: inline-block;
