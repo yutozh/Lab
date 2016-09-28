@@ -1,4 +1,6 @@
 // save password and username
+// var defer = $.Deferred();
+
 $(document).ready(function () {
     if ($.cookie("rmbUser") == "true") {
         $("#savepass").prop("checked", true);
@@ -27,17 +29,17 @@ function checkInput() {
     var alert = $("#alert_text");
     var wrapper = $('#wholewrapper');
     if (username == '') {
-        $("#inputStuNum").focus();
+
         alertShow("请输入学号!", "danger");
         return false;
     }
     if (password == '') {
-        $("#inputPassword").focus();
+
         alertShow("请输入密码!", "danger");
         return false;
     }
     if (($("#not_auto").attr('class')).toString().indexOf("active") > -1 && captcha == '') {
-        $("#input_captcha").focus();
+
         alertShow("请输入验证码!", "danger");
         return false;
     }
@@ -61,25 +63,28 @@ function onSubmit() {
             // 手动输入验证码
             captcha = $("#input_captcha");
             data = {"username": username, "password": password, "captcha": captcha.val()};
-            captchaResult = ajaxLogin(data);
-            if (captchaResult[0] == false) {
+            // captchaResult = ajaxLogin(data);
+            $.when(ajaxLogin(data, 0)).done(function (captchaResult) {
+                if (captchaResult[0] == false) {
 
-                if (captchaResult[1] == "-1") {
-                    alertShow("验证码错误", "danger");
-                    captcha.val("");
-                    captcha.focus();
-                } else if (captchaResult[1] == "-2") {
-                    alertShow("学号或密码错误", "danger");
-                } else if (captchaResult[1] == "-3") {
-                    alertShow("登陆超时", "danger");
-                } else {
-                    alertShow("未知错误,错误代码:" + captchaResult[1], "danger");
+                    if (captchaResult[1] == "-1") {
+                        alertShow("验证码错误", "danger");
+                        captcha.val("");
+
+                    } else if (captchaResult[1] == "-2") {
+                        alertShow("学号或密码错误", "danger");
+                    } else if (captchaResult[1] == "-3") {
+                        alertShow("登陆超时", "danger");
+                    } else {
+                        alertShow("未知错误,错误代码:" + captchaResult[1], "danger");
+                    }
+                    changeCaptcha();
+                    changeBtn("active");
+                    return false;
                 }
-                changeCaptcha();
-                changeBtn("active");
-                return false;
-            }
-        } else {
+            });
+        }
+    else {
             // var socket = io.connect("http://" + document.domain + ":" + location.port);
             // socket.on("response",function (msg) {
             //     console.log(msg);
@@ -97,42 +102,56 @@ function onSubmit() {
             var bar = $("#progress_bar");
             var values = '0%';
             data = {"username": username, "password": password, "captcha": captcha};
-            for (var i = 0; i < 5; i++) {
-                console.log(i);
-                values = (i * 20).toString() + '%';
-                bar.css({"width": values});
-                bar.text(values);
 
-                captchaResult = ajaxLogin(data);
+            $.when(ajaxLogin(data, 0)).done(function (res) {
 
-                if (captchaResult[0] == false) {
-                    if (captchaResult[1] == "-2") {
-                        alertShow("学号或密码错误", "danger");
-                        changeBtn("active");
-                        initBar();
-                        return false;
-                    }
-                }
-                else {
-                    finishBar('success');
-                    break;
-                }
-                if (i == 4) {
-                    finishBar('danger');
-                    alertShow("自动识别失败,请重试或手动输入", "danger");
-                    changeBtn("active");
-                    return false;
-                }
-            }
+                $.when(ajaxLogin(data, 1)).done(function (res) {
+
+                    $.when(ajaxLogin(data, 2)).done(function (res) {
+
+                        $.when(ajaxLogin(data, 3)).done(function (res) {
+
+                            $.when(ajaxLogin(data, 4)).done(function (res) {
+
+                                $.when(ajaxLogin(data, 5)).done(function (res) {
+
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+
+            // captchaResult =;
+            // if (captchaResult[0] == false) {
+            //     if (captchaResult[1] == "-2") {
+            //         alertShow("学号或密码错误", "danger");
+            //         changeBtn("active");
+            //         initBar();
+            //         return false;
+            //     }
+            // }
+            // else {
+            //     finishBar('success');
+            //     break;
+            // }
+            // if (i == 4) {
+            //     finishBar('danger');
+            //     alertShow("自动识别失败,请重试或手动输入", "danger");
+            //     changeBtn("active");
+            //     return false;
+            // }
+            // }
         }
 
-        postForGrade(captchaResult[1]);
+        // postForGrade(captchaResult[1]);
         changeBtn("active");
 
     } else {
         return false;
     }
 }
+
 
 function alertShow(info, type) {
     var alert = $("#alert_text");
@@ -180,30 +199,54 @@ function changeBtn(status) {
 function changeCaptcha() {
     $("#img_captcha").attr("src", "/image?a=" + Math.random().toString());
 }
-function ajaxLogin(data) {
+function ajaxLogin(data, i) {
     var res = [];
-    $.ajax({
-        url: '/gradeSubmit',
-        data: data,
-        dataType: 'json',
-        type: 'post',
-        async: false,
-        beforeSend: function () {
+    var defer = $.Deferred();
+    if (i == 5) {
+        res = [false, "-5"];
+        finishBar('danger');
+        alertShow("自动识别失败,请重试或手动输入", "danger");
+        changeBtn("active");
+        defer.reject(res);
+    }
 
-        },
-        success: function (result) {
-            if (result.res == "false") {
-                res = [false, result.session];
-                console.log(res);
-            } else {
-                alertShow("<span class='glyphicon glyphicon-ok-circle'> 验证成功,正在跳转中...", "success");
-                res = [true, result.session];
-                $.cookie("JID", result.JID);
-                $.cookie("name", result.nameLable);
+    else {
+        $.ajax({
+            url: '/gradeSubmit',
+            data: data,
+            dataType: 'json',
+            type: 'post',
+            // async: false,
+            beforeSend: function () {
+                values = ((i + 1) * 20).toString() + '%';
+                var bar = $("#progress_bar");
+                bar.css({"width": values});
+                bar.text(values);
+            },
+            success: function (result) {
+                if (result.res == "false") {
+                    res = [false, result.session];
+                    if (i != '-1' && res[1] == "-2") {
+                        alertShow("学号或密码错误", "danger");
+                        changeBtn("active");
+                        initBar();
+                        defer.reject(res);
+                    }
+                } else {
+                    res = [true, result.session];
+                    alertShow("<span class='glyphicon glyphicon-ok-circle'> 验证成功,正在跳转中...", "success");
+                    $.cookie("JID", result.JID);
+                    $.cookie("name", result.nameLable);
+                    finishBar('success');
+                    changeBtn("active");
+                    postForGrade(res[1]);
+                    defer.reject(res);
+                }
+                defer.resolve(res);  // 只在验证码识别错误时,执行该语句,继续下一次尝试
             }
-        }
-    });
-    return res;
+        });
+    }
+    return defer.promise();
 }
 
 function onCheckSignature() {
@@ -246,7 +289,7 @@ function onGetSignature() {
 }
 
 $('#copySignature').zclip({
-    path: '/static/js/ZeroClipboard.swf',
+    path: 'js/ZeroClipboard.swf',
     copy: function () {//复制内容
         return $("#privateInfo").text();
     },

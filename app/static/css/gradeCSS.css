@@ -15,17 +15,20 @@ body{
     bottom: 0;
     right: 0;
     display: none;
+    z-index: 998;
 }
 
 .main_alert{
     margin: auto;
     position: absolute !important;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
     bottom: 0;
     right: 0;
     width: 280px;
     height: 50px;
+    margin-top: -25px;
+    margin-left: -140px;
     z-index: 999;
     text-align: center;
 }
@@ -86,5 +89,8 @@ body{
         display: inline-block;
         float: right;
         margin-right: 10px;
+    }
+    .course_name{
+        font-size: small;
     }
 }
