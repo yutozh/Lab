@@ -116,7 +116,7 @@ def login(username, password, captcha='', JSESSIONID=''):
     return (True,csrf,JID,name)
 
 
-def parseGrade(MYcsrf, JID, username, name, year="2015"):
+def parseGrade(MYcsrf, JID, username, name, year="2014"):
     # 获取成绩信息
     url_grade_final = url_grade.format(csrf=MYcsrf)
     cookie = {"JSESSIONID": JID}
@@ -137,7 +137,7 @@ def parseGrade(MYcsrf, JID, username, name, year="2015"):
                 continue
         except Exception,e:
             continue
-        grade.append({"name":text[1].text, "type":text[2].text, "point":text[3].text,
+        grade.append({"name":text[1].text, "type":text[2].text, "point":text[3].text,"apart":text[5].text,
                       "putong":text[6].text, "year":text[7].text, "grade":int(float(text[9].text)),"used":False})
         # print text[1].text
         # print text[2].text
@@ -150,7 +150,7 @@ def parseGrade(MYcsrf, JID, username, name, year="2015"):
     return (statistics,grade)
 
 # 平均分计算
-def cal(list, grade="2015"):
+def cal(list, grade="2014"):
     sum1 = 0.0
     sum2 = 0.0
     allpoint = 0.0
@@ -158,11 +158,14 @@ def cal(list, grade="2015"):
 
     for i in list:
         if u"必修" in i["type"] and float(i["grade"]) != 0 \
-                and i["year"] == grade and (i["putong"] == u"普通" or i["putong"] == u"重修"):
-           sum1 += float(i["point"]) * float(i["grade"])
-           allpoint += float(i["point"])
-           i["used"] = True
-        elif (u"选修" in i['type'] or u"辅修" in i["putong"]) and i["year"] == grade:
+                and i["year"] == "2015" and (i["putong"] == u"普通" or i["putong"] == u"重修"):
+            if grade=='2015' and i["apart"] == u"体育部":
+                continue
+            else:
+               sum1 += float(i["point"]) * float(i["grade"])
+               allpoint += float(i["point"])
+               i["used"] = True
+        elif (u"选修" in i['type'] or u"辅修" in i["putong"]) and i["year"] == "2015":
             if u"专业选修" in i['type']:
                 sum2 += float(i["point"]) * float(i["grade"])
                 i["used"] = True
