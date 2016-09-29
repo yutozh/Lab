@@ -146,7 +146,7 @@ def parseGrade(MYcsrf, JID, username, name, year="2014"):
         # print "**************************"
     res_cal = cal(grade, year)
     statistics = res_cal[0:3]
-    createDocx(grade, name, username)
+    createDocx(grade, name, username, grade=year)
     return (statistics,grade)
 
 # 平均分计算
