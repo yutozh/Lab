@@ -154,7 +154,7 @@ def cal(list, grade="2015"):
     sum1 = 0.0
     sum2 = 0.0
     allpoint = 0.0
-    xx_grade = {"0.5":[],"1.0":[],"1.5":[],"2.0":[],"2.5":[],"3.0":[],"3.5":[],"4.0":[],"4.5":[],"5.0":[]}
+    xx_grade = {"0.5":[],"1.0":[],"1.5":[],"2.0":[],"2.5":[],"3.0":[],"3.5":[],"4.0":[],"4.5":[],"5.0":[],"5.5":[],"6.0":[]}
 
     for i in list:
         if u"必修" in i["type"] and float(i["grade"]) != 0 \
@@ -192,37 +192,41 @@ def cal(list, grade="2015"):
                                     for h in range(xx_grade_len_list[7], -1, -1):
                                         for i in range(xx_grade_len_list[8], -1, -1):
                                             for j in range(xx_grade_len_list[9], -1, -1):
-                                                total = 0.5*a+b+1.5*c+2*d+2.5*e+3*f+3.5*g+4*h+4.5*i+5*j
-                                                sum_ = 0.0
-                                                if(total <= 16):
-                                                    # for x in xx_grade["0.5"][0:int(a)]:
-                                                    #     sum += float(x["grade"])
-                                                    sum_ += sum(map(lambda d: float(d["grade"])*0.5, xx_grade["0.5"][0:int(a)]))
-                                                    sum_ += sum(map(lambda d: float(d["grade"])*1.0, xx_grade["1.0"][0:int(b)]))
-                                                    sum_ += sum(map(lambda d: float(d["grade"])*1.5, xx_grade["1.5"][0:int(c)]))
-                                                    sum_ += sum(map(lambda d: float(d["grade"])*2.0, xx_grade["2.0"][0:int(d)]))
-                                                    sum_ += sum(map(lambda d: float(d["grade"])*2.5, xx_grade["2.5"][0:int(e)]))
-                                                    sum_ += sum(map(lambda d: float(d["grade"])*3.0, xx_grade["3.0"][0:int(f)]))
-                                                    sum_ += sum(map(lambda d: float(d["grade"])*3.5, xx_grade["3.5"][0:int(g)]))
-                                                    sum_ += sum(map(lambda d: float(d["grade"])*4.0, xx_grade["4.0"][0:int(h)]))
-                                                    sum_ += sum(map(lambda d: float(d["grade"])*4.5, xx_grade["4.5"][0:int(i)]))
-                                                    sum_ += sum(map(lambda d: float(d["grade"])*5.0, xx_grade["5.0"][0:int(j)]))
+                                                for k in range(xx_grade_len_list[10], -1, -1):
+                                                    for l in range(xx_grade_len_list[11], -1, -1):
+                                                        total = 0.5*a+b+1.5*c+2*d+2.5*e+3*f+3.5*g+4*h+4.5*i+5*j+5.5*k+6*l
+                                                        sum_ = 0.0
+                                                        if(total <= 16):
+                                                            # for x in xx_grade["0.5"][0:int(a)]:
+                                                            #     sum += float(x["grade"])
+                                                            sum_ += sum(map(lambda d: float(d["grade"])*0.5, xx_grade["0.5"][0:int(a)]))
+                                                            sum_ += sum(map(lambda d: float(d["grade"])*1.0, xx_grade["1.0"][0:int(b)]))
+                                                            sum_ += sum(map(lambda d: float(d["grade"])*1.5, xx_grade["1.5"][0:int(c)]))
+                                                            sum_ += sum(map(lambda d: float(d["grade"])*2.0, xx_grade["2.0"][0:int(d)]))
+                                                            sum_ += sum(map(lambda d: float(d["grade"])*2.5, xx_grade["2.5"][0:int(e)]))
+                                                            sum_ += sum(map(lambda d: float(d["grade"])*3.0, xx_grade["3.0"][0:int(f)]))
+                                                            sum_ += sum(map(lambda d: float(d["grade"])*3.5, xx_grade["3.5"][0:int(g)]))
+                                                            sum_ += sum(map(lambda d: float(d["grade"])*4.0, xx_grade["4.0"][0:int(h)]))
+                                                            sum_ += sum(map(lambda d: float(d["grade"])*4.5, xx_grade["4.5"][0:int(i)]))
+                                                            sum_ += sum(map(lambda d: float(d["grade"])*5.0, xx_grade["5.0"][0:int(j)]))
+                                                            sum_ += sum(map(lambda d: float(d["grade"])*5.5, xx_grade["5.5"][0:int(k)]))
+                                                            sum_ += sum(map(lambda d: float(d["grade"])*6.0, xx_grade["6.0"][0:int(l)]))
 
 
-                                                    if sum_ > max_:
-                                                        max_ = sum_
-                                                        res_list = [a, b, c, d, e, f, g, h, i, j]
-                                                        # print total,a,b,c,d,e,f,g,h,i,j,max_
-                                                    if not isOverflow:
-                                                        raise Exception
-                                                else:
-                                                    isOverflow = True
+                                                            if sum_ > max_:
+                                                                max_ = sum_
+                                                                res_list = [a, b, c, d, e, f, g, h, i, j, k, l]
+                                                                # print total,a,b,c,d,e,f,g,h,i,j,max_
+                                                            if not isOverflow:
+                                                                raise Exception
+                                                        else:
+                                                            isOverflow = True
     except Exception:
         pass
 
     sum2 += max_
     try:
-        a, b, c, d, e, f, g, h, i, j = res_list
+        a, b, c, d, e, f, g, h, i, j, k, l = res_list
     except:
         print "error"
         return ("","","")
@@ -236,6 +240,8 @@ def cal(list, grade="2015"):
     (map(add, xx_grade["4.0"][0:int(h)]))
     (map(add, xx_grade["4.5"][0:int(i)]))
     (map(add, xx_grade["5.0"][0:int(j)]))
+    (map(add, xx_grade["5.5"][0:int(k)]))
+    (map(add, xx_grade["6.0"][0:int(l)]))
 
     if allpoint>0:
         F1 = sum1/allpoint
@@ -249,4 +255,3 @@ def cal(list, grade="2015"):
 
 def add(z):
     z["used"] = True
-    
