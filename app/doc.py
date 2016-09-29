@@ -39,7 +39,7 @@ def createDocx(list, name, num,  grade='2015'):
 
     cnt = 1
     for i in list:
-        if (u"公共选修" in i['type'] or u"辅修" in i["putong"]) and i["year"] == grade and i["used"] == True:
+        if (u"选修" in i['type'] or u"辅修" in i["putong"]) and i["year"] == grade and i["used"] == True:
             row_cells = table2.add_row().cells
             row_cells[0].text = str(cnt)
             row_cells[1].text = i["name"]
