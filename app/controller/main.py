@@ -1,12 +1,13 @@
 # coding=utf8
 
 from app import app, db, r
-from flask import request, render_template, make_response, redirect, send_file
+from flask import request, render_template, make_response, redirect, send_file, send_from_directory
 from app.model.User import User
 from app.model.getGrade import login, getImg, parseGrade
 import pickle
 import json
 import rsa
+import time
 import urllib
 from config import PATH
 
@@ -56,8 +57,9 @@ def getDetail():
     except:
         return redirect("grade")
 
-    gradeRes = parseGrade(MYcsrf=csrf, JID=JSESSIONID, username=username, year="2015")
-    name = urllib.unquote(name).encode("ISO-8859-1","ignore") # url中文解码
+    name = urllib.unquote(name).encode("ISO-8859-1", "ignore")  # url中文解码
+    gradeRes = parseGrade(MYcsrf=csrf, JID=JSESSIONID, username=username, name=name, year="2015")
+
 
     if len(gradeRes[1]) == 0:
         return redirect("grade")
@@ -71,7 +73,8 @@ def getDetail():
                             +gradeRes[0][1] + '|'
                             +gradeRes[0][2]+'|'
                             +name+'|'
-                            +str(username), pub_key).encode('base64')
+                            +str(username)+'|'
+                            +time.ctime(), pub_key).encode('base64')
     return render_template("gradeResult.html", statistics=gradeRes[0],
                            grade=gradeRes[1], name=name, username=username,
                            signature=str((signature)), PV=PV)
@@ -105,10 +108,11 @@ def getDoc():
     user = request.args.get("target", '')
     if (user == username and JSESSIONID != ''):
         try:
-            filename = "result_" + username + ".docx"
-            response = make_response(send_file(PATH + "app/temp/file_doc/" + filename))
-            response.headers["Content-Disposition"] = "attachment; filename={};".format(filename)
-            return response
+            filename = "成绩详情_" + username + ".docx"
+            # response = make_response(send_file(PATH + "app/temp/file_doc/" + filename))
+            # response.headers["Content-Disposition"] = "attachment; filename={};".format(filename)
+            # return response
+            return send_from_directory(PATH + "app/temp/file_doc/", filename ,as_attachment=True)
         except Exception,e:
             print e
             return redirect("grade")

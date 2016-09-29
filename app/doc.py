@@ -2,46 +2,51 @@
 from docx import Document
 from config import PATH
 
-def createDocx(list, num, grade='2015'):
+def createDocx(list, name, num,  grade='2015'):
     document = Document()
-    document.add_paragraph(u'以下是参与计算平均分的所有课程,可直接复制到申请表中.')
-    document.add_paragraph(u'若一次性粘贴格式有误,可以按行分别粘贴.')
-    cnt = 0
-    for i in list:
-        if i["used"] == True:
-            cnt += 1
-    table = document.add_table(rows=3, cols=cnt + 1)
+    document.add_heading(u'成绩详细信息', 0)
+    document.add_heading(u'姓名:'+name + u"\n学号:"+num, 1)
+    document.add_paragraph(u'(以下是所有参与平均分计算的课程)')
+    document.add_paragraph(u'\n必修部分')
 
-    cnt = 0
+    table = document.add_table(rows=1, cols=4,style = 'Table Grid')
+    hd_cells = table.rows[0].cells
+    hd_cells[0].text = u'序号'
+    hd_cells[1].text = u'课程名称'
+    hd_cells[2].text = u'学分'
+    hd_cells[3].text = u'成绩'
+
+    cnt = 1
     for i in list:
         if u"必修" in i["type"] and float(i["grade"]) != 0 \
-                and i["year"] == grade and i["putong"] == u"普通" and i["used"] == True:
-            cells =  table.rows[0].cells
-            cells[cnt].text = i["name"]
-            cells = table.rows[1].cells
-            cells[cnt].text = i["point"]
-            cells = table.rows[2].cells
-            cells[cnt].text = str(i["grade"])
+                and i["year"] == grade and (i["putong"] == u"普通" or i["putong"] == u"重修") and i["used"] == True:
+
+            row_cells = table.add_row().cells
+            row_cells[0].text = str(cnt)
+            row_cells[1].text = i["name"]
+            row_cells[2].text = i["point"]
+            row_cells[3].text = str(i["grade"])
             cnt += 1
 
-    cells = table.rows[0].cells
-    cells[cnt].text = ""
-    cells = table.rows[1].cells
-    cells[cnt].text = ""
-    cells = table.rows[2].cells
-    cells[cnt].text = ""
-    cnt += 1
+    document.add_paragraph(u'\n选修部分')
+    table2 = document.add_table(rows=1, cols=4,style = 'Table Grid')
+    hd_cells = table2.rows[0].cells
+    hd_cells[0].text = u'序号'
+    hd_cells[1].text = u'课程名称'
+    hd_cells[2].text = u'学分'
+    hd_cells[3].text = u'成绩'
 
+
+    cnt = 1
     for i in list:
         if (u"公共选修" in i['type'] or u"辅修" in i["putong"]) and i["year"] == grade and i["used"] == True:
-            cells = table.rows[0].cells
-            cells[cnt].text = i["name"]
-            cells = table.rows[1].cells
-            cells[cnt].text = i["point"]
-            cells = table.rows[2].cells
-            cells[cnt].text = str(i["grade"])
+            row_cells = table2.add_row().cells
+            row_cells[0].text = str(cnt)
+            row_cells[1].text = i["name"]
+            row_cells[2].text = i["point"]
+            row_cells[3].text = str(i["grade"])
             cnt += 1
 
-    document.save(PATH + "app/temp/file_doc/result_{}.docx".format(str(num)))
+    document.save(PATH + u"app/temp/file_doc/成绩详情_{}.docx".format(str(num)))
 
 

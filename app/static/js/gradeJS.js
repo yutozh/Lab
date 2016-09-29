@@ -295,7 +295,8 @@ baIy36lv5quAiH2ARHECRFoSqDp3QAUMTUHmmHeLMMfcUfmqhUccqHl7uuZKNsho\
             "学号:" + list[4] + "\n" +
             "必修:" + list[0] + "\n" +
             "选修:" + list[1] + "\n" +
-            "总分:" + list[2];
+            "总分:" + list[2] + "\n" +
+            "TimeStamp:" + list[5];
         alert("验证成功,详细信息如下:\n" + info);
     } else {
         alertShow("验证失败,请检查校验码是否完整", "warning");
@@ -306,6 +307,7 @@ function onGetSignature() {
     $("#signaturePanel").fadeIn(500);
     $("#getSignature").hide();
     $("#copySignature").show();
+    $("#p_copySignature").fadeIn(2000);
 }
 
 

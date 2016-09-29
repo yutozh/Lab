@@ -116,7 +116,7 @@ def login(username, password, captcha='', JSESSIONID=''):
     return (True,csrf,JID,name)
 
 
-def parseGrade(MYcsrf, JID, username, year="2015"):
+def parseGrade(MYcsrf, JID, username, name, year="2015"):
     # 获取成绩信息
     url_grade_final = url_grade.format(csrf=MYcsrf)
     cookie = {"JSESSIONID": JID}
@@ -146,7 +146,7 @@ def parseGrade(MYcsrf, JID, username, year="2015"):
         # print "**************************"
     res_cal = cal(grade, year)
     statistics = res_cal[0:3]
-    createDocx(grade, username)
+    createDocx(grade, name, username)
     return (statistics,grade)
 
 # 平均分计算
