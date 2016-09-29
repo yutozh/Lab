@@ -177,6 +177,7 @@ def cal(list, grade="2015"):
     xx_grade_len_list = sorted(xx_grade_len.iteritems(),key=lambda d:d)
     xx_grade_len_list = map(lambda d:d[1], xx_grade_len_list)
 
+    print xx_grade_len_list
     res_list = []
     max_ = 0.0
     isOverflow = False
@@ -193,7 +194,6 @@ def cal(list, grade="2015"):
                                             for j in range(xx_grade_len_list[9], -1, -1):
                                                 total = 0.5*a+b+1.5*c+2*d+2.5*e+3*f+3.5*g+4*h+4.5*i+5*j
                                                 sum_ = 0.0
-
                                                 if(total <= 16):
                                                     # for x in xx_grade["0.5"][0:int(a)]:
                                                     #     sum += float(x["grade"])
@@ -207,10 +207,11 @@ def cal(list, grade="2015"):
                                                     sum_ += sum(map(lambda d: float(d["grade"])*4.0, xx_grade["4.0"][0:int(h)]))
                                                     sum_ += sum(map(lambda d: float(d["grade"])*4.5, xx_grade["4.5"][0:int(i)]))
                                                     sum_ += sum(map(lambda d: float(d["grade"])*5.0, xx_grade["5.0"][0:int(j)]))
+                                                    print total,sum_, max_
 
-                                                    res_list = [a, b, c, d, e, f, g, h, i, j]
                                                     if sum_ > max_:
                                                         max_ = sum_
+                                                        res_list = [a, b, c, d, e, f, g, h, i, j]
                                                         # print total,a,b,c,d,e,f,g,h,i,j,max_
                                                     if not isOverflow:
                                                         raise Exception
@@ -222,6 +223,7 @@ def cal(list, grade="2015"):
     sum2 += max_
     try:
         a, b, c, d, e, f, g, h, i, j = res_list
+        print res_list
     except:
         print "error"
         return ("","","")
@@ -248,3 +250,4 @@ def cal(list, grade="2015"):
 
 def add(z):
     z["used"] = True
+    print "True"
