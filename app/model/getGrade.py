@@ -207,7 +207,7 @@ def cal(list, grade="2015"):
                                                     sum_ += sum(map(lambda d: float(d["grade"])*4.0, xx_grade["4.0"][0:int(h)]))
                                                     sum_ += sum(map(lambda d: float(d["grade"])*4.5, xx_grade["4.5"][0:int(i)]))
                                                     sum_ += sum(map(lambda d: float(d["grade"])*5.0, xx_grade["5.0"][0:int(j)]))
-                                                    print total,sum_, max_
+
 
                                                     if sum_ > max_:
                                                         max_ = sum_
@@ -223,7 +223,6 @@ def cal(list, grade="2015"):
     sum2 += max_
     try:
         a, b, c, d, e, f, g, h, i, j = res_list
-        print res_list
     except:
         print "error"
         return ("","","")
@@ -250,4 +249,4 @@ def cal(list, grade="2015"):
 
 def add(z):
     z["used"] = True
-    print "True"
+    
