@@ -84,7 +84,7 @@ $("#input_btn").click(function () {
                     +'</tbody>\
     </table></div>\
 <p>\
-        总计<span id="booknum">' + data.length +'</span>本教材, 总价格\
+        总计<span id="booknum">' + data.length +'</span>项, 总价格\
         <span id="bookprice">'+ price.toFixed(2) +'</span>元.\
     </p>\
                     <p style="margin-top: 1.5rem;">\

@@ -19,10 +19,10 @@ def readUserInfo():
         bookInfo = ""
         if reader.line_num == 1:
             continue
-        for i in range(18, 28):
+        for i in range(18, 29):
             bookInfo += str(line[i])
-        name = str(line[28]).decode("gb2312")
-        email = str(line[29])
+        name = str(line[29]).decode("gb2312")
+        email = str(line[30])
         user = User(username=name, email=email, bookInfo=bookInfo)
         db.session.add(user)
     db.session.commit()
@@ -58,6 +58,7 @@ def makeEmail():
     env = Environment(loader=PackageLoader('app', 'templates'))
     template = env.get_template('bookEmail.html')
 
+    all_price = 0.0
     with mail.connect() as conn:
         for u in users:
             bookStr = u.bookInfo
@@ -73,8 +74,8 @@ def makeEmail():
                                           books = sortedBooks,
                                           booknum = len(sortedBooks),
                                           price=price)
-
-
+            print price
+            all_price += price
             # emailAdd = u.email
 
             emailAdd = '545023318@qq.com'
@@ -85,12 +86,13 @@ def makeEmail():
             # conn.send(msg)
 
 
-            emailSender.sendEmail('教材预定情况',
-                                  htmlContent,
-                                  'html',
-                                  emailAdd)
+            # emailSender.sendEmail('教材预定情况',
+            #                       htmlContent,
+            #                       'html',
+            #                       emailAdd)
             # print htmlContent
             exit(0)
+    print all_price
 
 # readBookInfo()
 
@@ -106,3 +108,8 @@ if __name__ == '__main__':
     elif func == 'book':
         readBookInfo()
     print "success"
+
+
+    # readUserInfo()
+    # readBookInfo()
+    # makeEmail()
