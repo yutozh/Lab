@@ -1,7 +1,7 @@
 # coding=utf8
 
 import csv
-from app.model.User import User
+from app.model.User import User, Book
 from app import db, mail, app
 from jinja2 import Environment, PackageLoader
 import pickle
@@ -9,47 +9,66 @@ import copy
 import emailSender
 import os
 import sys
+import time
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
+db.drop_all()
 db.create_all()
-def readUserInfo():
-    reader = csv.reader(file(os.path.join(sys.path[0],"All_Data_Original.csv"), "rb"))
-    for line in reader:
-        bookInfo = ""
-        if reader.line_num == 1:
-            continue
-        for i in range(18, 29):
-            bookInfo += str(line[i])
-        name = str(line[29]).decode("gb2312")
-        email = str(line[30])
-        user = User(username=name, email=email, bookInfo=bookInfo)
-        db.session.add(user)
-    db.session.commit()
-
 def readBookInfo():
-    reader = csv.reader(file(os.path.join(sys.path[0],"bookItems.csv"), "rb"))
-    bookItems = {}
-    i = 0
+    reader = csv.reader(file(os.path.join(sys.path[0],"books.csv"), "rb"))
     for line in reader:
-        book = []
         if reader.line_num == 1:
             continue
         try:
-            book.append(str(line[0]))
-            book.append('%.2f'%float(line[1]))
-            book.append(float(line[2]))
-            book.append('%.2f'%float(line[3]))
-            bookItems[str(i)] = book
-        except:
-            print "csv格式有误"
+            bookName = str(line[0])
+            priceBefore = int(float(line[1])*100)
+            priceOff = int(float(line[2])*100)
+            priceAfter = int(float(line[3])*100)
+            newBook = Book(bookName=bookName, priceBefore=priceBefore,
+                           priceOff=priceOff, priceAfter=priceAfter)
+            db.session.add(newBook)
+            db.session.commit()
+        except Exception, e:
+            print  e
             exit()
-        i += 1
 
-    outfile = open("bookdata.pkl",'wb')
-    pickle.dump(bookItems, outfile)
-    outfile.close()
-    print "finish"
+    print "Book info reading is completed..."
+
+def readUserInfo():
+    reader = csv.reader(file(os.path.join(sys.path[0],"All_Data_Original.csv"), "rb"))
+    try:
+        for line in reader:
+            if reader.line_num == 1:
+                continue
+            name = str(line[33]).decode("gb2312")
+            email = str(line[35])
+            user = User(username=name, email=email)
+            db.session.add(user)
+    except Exception,e:
+        print e
+    db.session.commit()
+    print "User info reading is completed..."
+
+
+def readPurchase():
+    reader = csv.reader(file(os.path.join(sys.path[0],"All_Data_Original.csv"), "rb"))
+    try:
+        for line in reader:
+            if reader.line_num == 1:
+                continue
+            name = str(line[33]).decode("gb2312")
+            user = db.session.query(User).filter_by(username=name).one()
+            for i in range(18, 33):
+                if line[i] == '2':
+                    oneOfBooks = db.session.query(Book).filter_by(id=i-17).one()
+                    user.books.append(oneOfBooks)
+    except Exception,e:
+        print e
+    db.session.commit()
+    print "Purchase info reading is completed..."
+
+
 
 def makeEmail():
     users = User.query.all()
@@ -74,11 +93,12 @@ def makeEmail():
                                           books = sortedBooks,
                                           booknum = len(sortedBooks),
                                           price=price)
-            print price
+            print u.username,price, 200-price
             all_price += price
             # emailAdd = u.email
+            # print emailAdd
 
-            emailAdd = '545023318@qq.com'
+            # emailAdd = '545023318@qq.com'
             # msg = Message('教材预定情况',
             #               recipients=[emailAdd],
             #               sender=("周于涛", "zyt4321@oattao.cn"),
@@ -90,8 +110,10 @@ def makeEmail():
             #                       htmlContent,
             #                       'html',
             #                       emailAdd)
+
+
             # print htmlContent
-            exit(0)
+
     print all_price
 
 # readBookInfo()
@@ -107,9 +129,12 @@ if __name__ == '__main__':
         readUserInfo()
     elif func == 'book':
         readBookInfo()
+    elif func == 'purchase':
+        readPurchase()
     print "success"
 
-
-    # readUserInfo()
     # readBookInfo()
+    # readUserInfo()
+    # readPurchase()
     # makeEmail()
+    pass

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+     maximum-scale=1, user-scalable=no">
+    <title>教材预定查询</title>
+    <!--<link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/myCSS2.css" rel="stylesheet">
+    <link href="../static/css/spin.css" rel="stylesheet">
+</head>
+<body>
+    <div id="wholewrapper">
+        <div class="three-quarters-loader"></div>
+    </div>
+<div class="container-fluid">
+    <div class="row" id="app">
+        <div>
+            <p id="title">教材预定查询</p>
+        </div>
+        <div id="contain">
+            <div id="main">
+                <div id="input_wrapper" v-if="isInputShow">
+                    <div id="input">
+                        <form id="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="输入你的名字..." id="input_name"
+                                       name="username" v-model="inputUsername">
+                                <br>
+                                <input type="button" value="查 询" id="input_btn" @click="submitSearch"
+                                       class="btn btn-info form-control">
+                                <p id="prompt"></p>
+                            </div>
+                        </form>
+                    </div>
+                    <span id="#prompt"></span>
+                </div>
+
+                <div id="result_wrapper" v-if="isResultShow">
+                    <p id="span_hello">
+                        {{username}}同学,以下是你的教材预定情况:
+                    </p>
+                    <span>(点击可查看价格详情)</span>
+                    <table class="table table-condensed">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>书名</th>
+                            <th>折后价</th>
+                            <th>数量</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(item, index) in items" @click="showDetail(item,index)">
+                            <td>{{index}}</td>
+                            <td><a  :id="index" class="tds" data-toggle="popover" :title="item.bookname"
+                                    data-content="" data-delay='delay: { "show": 500, "hide": 100 }"'>{{item.bookname}}</a></td>
+                            <td v-if="item.priceAfter != 0">{{(item.priceAfter / 100).toFixed(2)}}</td>
+                            <td v-else>暂无信息</td>
+                            <td>{{item.quantity}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div id="resultCounts">
+                        <p>已确定价格的有<span class="badge">
+                            {{bookCounts}}项</span>,总计<span class="label label-primary" style="font-size: small"> {{priceCounts}}元</span>
+                        </p>
+                    </div>
+                    <div id="backBtn" class="btn btn-warning form-control" v-if="isBackBtn" @click="back">重新查询</div>
+                    <p style="margin-top: 1.5rem;">
+                        如有任何问题请及时联系你们的学委哦~
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <div id="foot" v-if="isInputShow">
+            <p>赣ICP备15011558号</p>
+            <p>V0.2.0 Designed By ZYT</p>
+        </div>
+    </div>
+</div>
+
+
+<!--<script src="http://vuejs.org/js/vue.js"></script>-->
+<script src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/vue/2.1.10/vue.min.js"></script>
+<!--<script src="../static/js/vue.js"></script>-->
+<script>
+    var vue = new Vue({
+        el: "#app",
+        data: {
+            isInputShow: true,
+            isResultShow: false,
+            isBackBtn: false,
+            inputUsername: "",
+            items: [],
+            username: ""
+        },
+        methods: {
+            submitSearch: function () {
+                $.ajax({
+                    url: '/bookSearch',
+                    data: {"name": this.inputUsername},
+                    context: this,
+                    dataType: "json",
+                    type: "post",
+                    beforeSend: function () {
+                        $("#wholewrapper").fadeIn();
+                    },
+                    success: function (data) {
+                        $("#wholewrapper").fadeOut();
+                        if (data.status) {
+                            this.isInputShow = false;
+                            this.isResultShow = true;
+                            this.isBackBtn = true;
+                            this.items = data.items;
+                            this.username = data.username;
+                        }
+                        else {
+                            $("#prompt").html('没有查到喔T﹏T');
+                        }
+                    }
+                });
+            },
+            showDetail: function (item,index) {
+//                $("#"+event.target.getAttribute("id"))
+                var s = "原价:" + item.priceBefore/100 + "元 ;折扣:" + item.priceOff/100;
+                 $("#"+index).attr("data-content", s).popover("show");
+                setTimeout(function () {
+                    $("#"+index).popover("hide");
+                },2000);
+                 return null;
+            },
+            back: function () {
+                this.isInputShow = true;
+                this.isResultShow = false;
+                this.isBackBtn = false;
+                this.inputUsername = "";
+                this.items = [];
+                this.username = "";
+            },
+
+        },
+        computed: {
+            bookCounts: function () {
+                var counts = 0;
+                console.log(this.items);
+                this.items.forEach(function (th) {
+                    console.log(th.priceAfter);
+                    if (th.priceAfter != 0) counts++;
+                });
+                return counts;
+            },
+            priceCounts: function () {
+                var counts = 0.0;
+                this.items.forEach(function (th) {
+                    if (th.priceAfter != 0)
+                        counts += th.priceAfter;
+                });
+                return (counts / 100).toFixed(2)
+            }
+
+        }
+    });
+</script>
+</body>
+</html>

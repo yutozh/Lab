@@ -2,7 +2,8 @@
 
 from app import app, db, r
 from flask import request, render_template, make_response, redirect, send_file, send_from_directory
-from app.model.User import User
+from app.model.User import User, Purchase
+
 from app.model.getGrade import login, getImg, parseGrade
 import pickle
 import json
@@ -11,27 +12,48 @@ import time
 import urllib
 from config import PATH
 
+app.jinja_env.variable_start_string = '{{ '
+
+app.jinja_env.variable_end_string = ' }}'
 @app.route("/bookSearch", methods=["POST","GET"])
 def main():
     if request.method == 'GET':
-        return render_template('bookSearch.html')
+        print "ok"
+        return render_template('bookSearch2.html')
+        # return app.send_static_file("bookSearch2.html")
     else:
         username = request.form.get('name','')
         user = User.query.filter_by(username=username).first()
         if user is not None:
-            inputfile = open("bookdata.pkl", 'rb')
-            bookDict = pickle.load(inputfile)
-            bookStr = user.bookInfo
+            # inputfile = open("bookdata.pkl", 'rb')
+            # bookDict = pickle.load(inputfile)
+            # bookStr = user.bookInfo
 
-            for i in range(0, len(bookStr)):
-                if bookStr[i] == '2':
-                    bookDict.pop(str(i))
-            sortedBooks = sorted(bookDict.items())
+            # for i in range(0, len(bookStr)):
+            #     if bookStr[i] == '2':
+            #         bookDict.pop(str(i))
+            # sortedBooks = sorted(bookDict.items())
+            datas = {"status":True, "items":[],"username":username}
+            for i in  user.books:
+                # oneOdItem = {}
+                # oneOdItem["bookname"] = i.bookName
+                # oneOdItem["priceBefore"] = i.priceBefore
+                # oneOdItem["priceOff"] = i.priceOff
+                # oneOdItem["priceAfter"] = i.priceAfter
+                # oneOdItem["introduction"] = i.introduction
+                # oneOdItem["quantity"] = i.quantity
+                # oneOdItem["publishHouse"] = i.publishHouse
+                # oneOdItem["author"] = i.author
+                # oneOdItem["ISBN"] = i.ISBN
+                quantity = db.session.query(Purchase).filter_by(user_id=user.id, book_id=i.id).one()
+                oneOfItem  = i.toJson()
+                oneOfItem["quantity"] = quantity.quantity
+                datas["items"].append(oneOfItem)
 
-            print json.dumps(sortedBooks)
-            return json.dumps(sortedBooks)
+            print datas
+            return json.dumps(datas)
         else:
-            return json.dumps({'result':'False'})
+            return json.dumps({'status':False})
 
 
 @app.route("/grade", methods=["GET","POST"])
