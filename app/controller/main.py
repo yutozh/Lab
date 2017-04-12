@@ -61,6 +61,7 @@ def gradeIndex():
     r.incrby("PV",1)
     PV = r.get("PV")
     rate = float(r.get("SUCCESS")) * 100/ float(r.get("ALL"))
+    print PV
     return render_template("gradeIndex.html", PV=PV, rate="%.2f"% rate)
 
 @app.route("/gradeDetail", methods=["GET"])

@@ -24,7 +24,7 @@
                     </p>
                 </div>
                 <div class="div_result">
-                    <p style="font-weight: bolder ; font-size: large; color: #3388ee">亲爱的 {{name}} 同学,你好~</p>
+                    <p style="font-weight: bolder ; font-size: large; color: #3388ee">亲爱的 {{ name }} 同学,你好~</p>
                     <div class="tabtable">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="active"><a href="#zf" data-toggle="tab" role="tab">总分</a></li>
@@ -38,15 +38,15 @@
                             <div id="div_zf">
                                 <p id="p_zf1">
                                     <span class="label label-primary span_zf">必修课:</span>
-                                    {{statistics[0]}}
+                                    {{ statistics[0] }}
                                 </p>
                                 <p id="p_zf2">
                                     <span class="label label-primary span_zf">选修课:</span>
-                                    {{statistics[1]}}
+                                    {{ statistics[1] }}
                                 </p>
                                 <p id="p_zf3">
                                     <span class="label label-success span_zf">总&nbsp;&nbsp;&nbsp;&nbsp;分:</span>
-                                    {{statistics[2]}}
+                                    {{ statistics[2] }}
                                 </p>
                             </div>
                             <button type="btn" class="btn btn-block btn-info btn-lg" id="getSignature"
@@ -56,7 +56,7 @@
                             <div class="panel panel-default" id="signaturePanel" style="display: none">
                                 <div class="panel-body">
                                     <div id="privateInfo">
-                                        {{signature}}
+                                        {{ signature }}
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                             <div id="div_xz">
                                 下载信息表:
                                 <img class="img_download_icon" src="../static/img/word_icon.jpg">
-                                <a href="/gradeDetail/getDoc?target={{username}}">成绩详情_{{username}}.docx</a>
+                                <a href="/gradeDetail/getDoc?target={{ username }}">成绩详情_{{username}}.docx</a>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="jy" role="tabpanel">
@@ -124,7 +124,7 @@
                         <div>
                             <p>结果仅供参考,如有任何问题请及时反映</p>
                             <p>Designed by ZYT. QQ:545023318</p>
-                            <p>总访问量: {{PV}}</p>
+                            <p>总访问量: {{ PV }}</p>
                             <p style="font-size: small">感谢张宇同学为选修课成绩计算提供核心算法</p>
                         </div>
                     </div>

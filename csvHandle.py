@@ -13,8 +13,9 @@ import time
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-db.drop_all()
-db.create_all()
+# db.drop_all()
+#
+# db.create_all()
 def readBookInfo():
     reader = csv.reader(file(os.path.join(sys.path[0],"books.csv"), "rb"))
     for line in reader:
@@ -72,28 +73,24 @@ def readPurchase():
 
 def makeEmail():
     users = User.query.all()
-    inputfile = open("bookdata.pkl",'rb')
-    bookDict = pickle.load(inputfile)
+
     env = Environment(loader=PackageLoader('app', 'templates'))
     template = env.get_template('bookEmail.html')
 
     all_price = 0.0
     with mail.connect() as conn:
         for u in users:
-            bookStr = u.bookInfo
-            bookValid = copy.deepcopy(bookDict)
             price = 0
-            for i in range(0, len(bookStr)):
-                if bookStr[i] == '2':
-                    bookValid.pop(str(i))
-            sortedBooks = sorted(bookValid.items())
-            for j in sortedBooks:
-                price += float(j[1][3])
-            htmlContent = template.render(username=u.username,
-                                          books = sortedBooks,
-                                          booknum = len(sortedBooks),
-                                          price=price)
-            print u.username,price, 200-price
+            for item in u.books:
+                price += item.priceAfter
+
+
+
+            # htmlContent = template.render(username=u.username,
+            #                               books = sortedBooks,
+            #                               booknum = len(sortedBooks),
+            #                               price=price)
+            print u.username,price
             all_price += price
             # emailAdd = u.email
             # print emailAdd
@@ -121,20 +118,20 @@ def makeEmail():
 # makeEmail()
 # print ('%.2f'%float(2.0))
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print "Add args 'user' for readUserInfo(),'book' for readBookInfo()."
-        exit(1)
-    func = sys.argv[1]
-    if func == 'user':
-        readUserInfo()
-    elif func == 'book':
-        readBookInfo()
-    elif func == 'purchase':
-        readPurchase()
-    print "success"
+    # if len(sys.argv) != 2:
+    #     print "Add args 'user' for readUserInfo(),'book' for readBookInfo()."
+    #     exit(1)
+    # func = sys.argv[1]
+    # if func == 'user':
+    #     readUserInfo()
+    # elif func == 'book':
+    #     readBookInfo()
+    # elif func == 'purchase':
+    #     readPurchase()
+    # print "success"
 
-    # readBookInfo()
-    # readUserInfo()
-    # readPurchase()
-    # makeEmail()
+    readBookInfo()
+    readUserInfo()
+    readPurchase()
+    makeEmail()
     pass
