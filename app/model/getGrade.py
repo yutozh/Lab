@@ -144,15 +144,15 @@ def parseGrade(MYcsrf, JID, username, name, year="2014"):
         # print text[3].text
         # print text[9].text
         # print "**************************"
-    res_cal = cal(grade, year)
+    res_cal = cal2(grade, year)
     statistics = res_cal[0:3]
     createDocx(grade, name, username, grade=year)
     return (statistics,grade)
 
 # 平均分计算
 def cal(list, grade="2014"):
-    sum1 = 0.0
-    sum2 = 0.0
+    sum1 = 0.0   # 必修课
+    sum2 = 0.0   # 专选课,公选\辅修
     allpoint = 0.0
     xx_grade = {"0.5":[],"1.0":[],"1.5":[],"2.0":[],"2.5":[],"3.0":[],"3.5":[],"4.0":[],"4.5":[],"5.0":[],"5.5":[],"6.0":[]}
 
@@ -258,3 +258,51 @@ def cal(list, grade="2014"):
 
 def add(z):
     z["used"] = True
+
+
+def cal2(list, grade="2014"):
+    sum1 = 0.0   # 必修课
+    sum2 = 0.0   # 专选课,公选\辅修
+    allpoint = 0.0
+    course = []
+
+    for i in list:
+        if u"必修" in i["type"] and float(i["grade"]) != 0 \
+                and i["year"] == "2015" and (i["putong"] == u"普通" or i["putong"] == u"重修"):
+            if grade=='2015' and i["apart"] == u"体育部":
+                continue
+            else:
+               sum1 += float(i["point"]) * float(i["grade"])
+               allpoint += float(i["point"])
+               i["used"] = True
+        elif (u"选修" in i['type'] or u"辅修" in i["putong"]) and i["year"] == "2015":
+            if u"专业选修" in i['type']:
+                sum2 += float(i["point"]) * float(i["grade"])
+                i["used"] = True
+            else:
+                course.append({"value":float(i["point"])*float(i["grade"]), "cost":float(i["point"]), "item":i})
+
+    matrix = ([0] * 33)
+    matrixChoose = [([0]*33) for i in range(len(course) + 1)]
+    for i in range(1, len(course)+1):
+        for j in range(32, 0,-1):
+            if course[i-1]["cost"]*2 <= j:
+                matrix[j] = matrix[j - int(course[i-1]["cost"]*2)] + course[i-1]["value"]
+                matrixChoose[i][j] = 1
+    sum2 += matrix[32]
+    i = len(course)
+    j = 32
+    while i>0 and j >0:
+        if matrixChoose[i][j] ==1 :
+            course[i-1]["item"]["used"] = True
+            j = int(j - course[i-1]["cost"]*2)
+        i -= 1
+
+    if allpoint>0:
+        F1 = sum1/allpoint
+    else:
+        F1 = 0
+    F2 = sum2 * 0.002
+    F3 = F1 + F2
+
+    return ("%0.6f"%F1,("%0.6f"%F2).zfill(9),"%0.6f"%F3)
