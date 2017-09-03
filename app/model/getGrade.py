@@ -70,7 +70,7 @@ def login(username, password, captcha='', JSESSIONID=''):
         # 自动识别
         # autoCode = pytesseract.image_to_string(imgInfo[0],lang="LAN" ,config="-psm 7 nobatch").replace(" ","")
 
-        autoCode = pytesseract.image_to_string(imgInfo[0],lang="LAN" ,config="-psm 7 nobatch --tessdata-dir "+tessdata_dir_config).replace(" ","")
+        autoCode = pytesseract.image_to_string(imgInfo[0],lang="LAN" ,config='-psm 7 nobatch --tessdata-dir "'+tessdata_dir_config+'"').replace(" ","")
         img_code = autoCode
         r.incrby("ALL",1)
         JID = str(imgInfo[1])
