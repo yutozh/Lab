@@ -9,3 +9,6 @@ MAIL_USE_SSL = True
 MAIL_USERNAME = 'zyt4321@oattao.cn'
 MAIL_PASSWORD = ''
 MAIL_MAX_EMAILS = 3
+SQLALCHEMY_TRACK_MODIFICATIONS = True
+
+tessdata_dir_config = "/home/zyt/PycharmProjects/BookManager/"

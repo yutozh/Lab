@@ -9,7 +9,7 @@ import pytesseract
 from PIL import Image
 from captcha import clearNoise, threshold
 
-from config import PATH
+from config import PATH,tessdata_dir_config
 from app.doc import createDocx
 
 reload(sys)
@@ -68,7 +68,9 @@ def login(username, password, captcha='', JSESSIONID=''):
         # 获取图片
         imgInfo = getImg(username)
         # 自动识别
-        autoCode = pytesseract.image_to_string(imgInfo[0],lang="LAN" ,config="-psm 7 nobatch").replace(" ","")
+        # autoCode = pytesseract.image_to_string(imgInfo[0],lang="LAN" ,config="-psm 7 nobatch").replace(" ","")
+
+        autoCode = pytesseract.image_to_string(imgInfo[0],lang="LAN" ,config=tessdata_dir_config).replace(" ","")
         img_code = autoCode
         r.incrby("ALL",1)
         JID = str(imgInfo[1])
