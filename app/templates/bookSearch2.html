@@ -24,16 +24,16 @@
             <div id="main">
                 <div id="input_wrapper" v-if="isInputShow">
                     <div id="input">
-                        <form id="form">
+                        <div id="form">
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="输入你的名字..." id="input_name"
-                                       name="username" v-model="inputUsername">
+                                       name="username" v-model="inputUsername" @keyup.enter="submitSearch">
                                 <br>
                                 <input type="button" value="查 询" id="input_btn" @click="submitSearch"
                                        class="btn btn-info form-control">
                                 <p id="prompt"></p>
                             </div>
-                        </form>
+                        </div>
                     </div>
                     <span id="#prompt"></span>
                 </div>

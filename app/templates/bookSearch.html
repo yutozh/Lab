@@ -44,7 +44,7 @@
             <form id="form">
                 <input type="text" placeholder="输入你的名字..." id="input_name" name="username">
                 <br>
-                <input type="button" value="查 询" id="input_btn">
+                <input type="button" value="查 询" id="input_btn" >
                 <p id="prompt"></p>
             </form>
         </div>
@@ -58,6 +58,13 @@
 
 
     <script src="../static/js/myJS.js"></script>
-
+    <script>
+      $('html').bind('keydown',function(e){
+          if(e.keyCode===13){
+           alert('enter');
+           $('#input_btn').click();
+          }
+      });
+    </script>
 </body>
 </html>

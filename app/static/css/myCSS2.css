@@ -72,7 +72,8 @@ td, th{
    padding-bottom: 60px; /*重要！给footer预留的空间*/
 }
 body{
-    background: #1abc9c;
+    /*background: #1abc9c;*/
+    background: #152626;
     color: snow;
 }
 #input{

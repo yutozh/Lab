@@ -18,7 +18,6 @@ app.jinja_env.variable_end_string = ' }}'
 @app.route("/bookSearch", methods=["POST","GET"])
 def main():
     if request.method == 'GET':
-        print "ok"
         return render_template('bookSearch2.html')
         # return app.send_static_file("bookSearch2.html")
     else:

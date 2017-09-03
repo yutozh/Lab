@@ -13,9 +13,9 @@ import time
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-# db.drop_all()
-#
-# db.create_all()
+db.drop_all()
+
+db.create_all()
 def readBookInfo():
     reader = csv.reader(file(os.path.join(sys.path[0],"books.csv"), "rb"))
     for line in reader:
@@ -42,8 +42,8 @@ def readUserInfo():
         for line in reader:
             if reader.line_num == 1:
                 continue
-            name = str(line[33]).decode("gb2312")
-            email = str(line[35])
+            name = str(line[27]).decode("gb2312")
+            email = ""
             user = User(username=name, email=email)
             db.session.add(user)
     except Exception,e:
@@ -58,10 +58,11 @@ def readPurchase():
         for line in reader:
             if reader.line_num == 1:
                 continue
-            name = str(line[33]).decode("gb2312")
+            name = str(line[27]).decode("gb2312")
+            print name
             user = db.session.query(User).filter_by(username=name).one()
-            for i in range(18, 33):
-                if line[i] == '2':
+            for i in range(18, 27):
+                if line[i] == '1':
                     oneOfBooks = db.session.query(Book).filter_by(id=i-17).one()
                     user.books.append(oneOfBooks)
     except Exception,e:
@@ -133,5 +134,5 @@ if __name__ == '__main__':
     readBookInfo()
     readUserInfo()
     readPurchase()
-    makeEmail()
+    # makeEmail()
     pass
