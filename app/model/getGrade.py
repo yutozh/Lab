@@ -160,14 +160,14 @@ def cal(list, grade="2014"):
 
     for i in list:
         if u"必修" in i["type"] and float(i["grade"]) != 0 \
-                and i["year"] == "2015" and (i["putong"] == u"普通" or i["putong"] == u"重修"):
+                and i["year"] == "2016" and (i["putong"] == u"普通" or i["putong"] == u"重修"):
             if grade=='2015' and i["apart"] == u"体育部":
                 continue
             else:
                sum1 += float(i["point"]) * float(i["grade"])
                allpoint += float(i["point"])
                i["used"] = True
-        elif (u"选修" in i['type'] or u"辅修" in i["putong"]) and i["year"] == "2015":
+        elif (u"选修" in i['type'] or u"辅修" in i["putong"]) and i["year"] == "2016":
             if u"专业选修" in i['type']:
                 sum2 += float(i["point"]) * float(i["grade"])
                 i["used"] = True
@@ -270,14 +270,14 @@ def cal2(list, grade="2014"):
 
     for i in list:
         if u"必修" in i["type"] and float(i["grade"]) != 0 \
-                and i["year"] == "2015" and (i["putong"] == u"普通" or i["putong"] == u"重修"):
+                and i["year"] == "2016" and (i["putong"] == u"普通" or i["putong"] == u"重修"):
             if grade=='2015' and i["apart"] == u"体育部":
                 continue
             else:
                sum1 += float(i["point"]) * float(i["grade"])
                allpoint += float(i["point"])
                i["used"] = True
-        elif (u"选修" in i['type'] or u"辅修" in i["putong"]) and i["year"] == "2015":
+        elif (u"选修" in i['type'] or u"辅修" in i["putong"]) and i["year"] == "2016":
             if u"专业选修" in i['type']:
                 sum2 += float(i["point"]) * float(i["grade"])
                 i["used"] = True
