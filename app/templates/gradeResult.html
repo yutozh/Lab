@@ -74,32 +74,47 @@
                                         <tr>
                                             <th class="text-center">序号</th>
                                             <th class="text-center">课程名称</th>
+                                            <th class="text-center">类型</th>
+                                            <th class="text-center">学年</th>
+                                            <th class="text-center">学分</th>
                                             <th class="text-center">成绩</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         {% for item in grade %}
-                                        {% if item.grade >= 90 %}
-                                        <tr class="success">
-                                        {% elif item.grade <60 %}
-                                        <tr class="danger">
-                                        {% else %}
-                                        <tr class="info">
-                                        {% endif %}
-                                            <td>{{ loop.index }}</td>
-                                            <td>
-                                                {% if item.used == true %}
-                                                <span class="glyphicon glyphicon-heart" style="font-size: small; color: hotpink"></span>
-                                                {% endif %}
-                                                <span class="course_name">{{ item.name }}</span>
-                                            </td>
-                                            <td>{{ item.grade }}</td>
-                                        </tr>
+                                            {% if item.grade >= 90 %}
+                                            <tr class="success">
+                                            {% elif item.grade <60 %}
+                                            <tr class="danger">
+                                            {% else %}
+                                            <tr class="info">
+                                            {% endif %}
+
+                                                <td>{{ loop.index }}</td>
+                                                <td>
+                                                    {% if item.used == true %}
+                                                    <span class="glyphicon glyphicon-heart" style="font-size: small; color: hotpink"></span>
+                                                    {% endif %}
+                                                    <span class="course_name">{{ item.name }}</span>
+                                                </td>
+                                                <td>{{ item.type }}({{ item.putong }})</td>
+                                                <td>{{ item.year }}</td>
+                                                <td>{{ item.point }}</td>
+                                                <td>{{ item.grade }}</td>
+                                            </tr>
                                         {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="">
+                                    <p>必修学分：{{ Bixiu[0] }} / {{ Bixiu[1] }}</p>
+                                    <p>专选学分：{{ Zhuanxuan[0] }} / {{ Zhuanxuan[1] }}</p>
+                                    <p>公选学分：{{ Gongxuan[0] }} / {{ Gongxuan[1] }}</p>
+                                    <p>总学分：{{ Bixiu[0]+Zhuanxuan[0]+Gongxuan[0] }} / {{ Bixiu[1]+Zhuanxuan[1]+Gongxuan[1] }}</p>
+                                    <p>----------------------------------</p>
+                                    <p>辅修学分：{{ Fuxiu[0] }} / {{ Fuxiu[1] }}</p>
 
+                                </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="xz" role="tabpanel">
@@ -125,7 +140,6 @@
                             <p>结果仅供参考,如有任何问题请及时反映</p>
                             <p>Designed by ZYT. QQ:545023318</p>
                             <p>总访问量: {{ PV }}</p>
-                            <p style="font-size: small">感谢张宇同学为选修课成绩计算提供核心算法</p>
                         </div>
                     </div>
                 </div>

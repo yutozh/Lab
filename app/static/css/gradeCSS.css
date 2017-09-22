@@ -33,6 +33,11 @@ body{
     text-align: center;
 }
 
+#form_head{
+    margin:  30px auto;
+}
+
+
 #p_title{
     font-size: 3rem;
     color: black;
@@ -53,11 +58,8 @@ body{
     font-size: x-small;
 }
 
-#div_grade{
-    min-width: 160px;
-    display: inline-block;
-    float: right;
-    margin-right: 8%;
+#div_grade, #div_isPE, #div_targetYear{
+    margin-right: 15px;
 }
 .tab-content{
     text-align: center;
@@ -84,23 +86,23 @@ body{
     word-wrap: break-word;
 }
 @media screen and (max-width: 500px) {
-    #div_grade{
-        min-width: 140px;
-        display: inline-block;
-        float: right;
-        margin-right: 10px;
-    }
+    /*#div_grade{*/
+        /*min-width: 140px;*/
+        /*display: inline-block;*/
+        /*float: right;*/
+        /*margin-right: 10px;*/
+    /*}*/
     .course_name{
         font-size: x-small;
     }
 }
 @media screen and (max-width: 650px) {
-    #div_grade{
-        min-width: 140px;
-        display: inline-block;
-        float: right;
-        margin-right: 10px;
-    }
+    /*#div_grade{*/
+        /*min-width: 140px;*/
+        /*display: inline-block;*/
+        /*float: right;*/
+        /*margin-right: 10px;*/
+    /*}*/
     .course_name{
         font-size: small;
     }

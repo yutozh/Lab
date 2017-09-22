@@ -48,17 +48,17 @@ function checkInput() {
     var captcha = $("#input_captcha").val();
     var alert = $("#alert_text");
     var wrapper = $('#wholewrapper');
-    if (username == '') {
+    if (username === '') {
 
         alertShow("请输入学号!", "danger");
         return false;
     }
-    if (password == '') {
+    if (password === '') {
 
         alertShow("请输入密码!", "danger");
         return false;
     }
-    if (($("#not_auto").attr('class')).toString().indexOf("active") > -1 && captcha == '') {
+    if (($("#not_auto").attr('class')) && captcha === '') {
 
         alertShow("请输入验证码!", "danger");
         return false;
@@ -71,6 +71,7 @@ function checkInput() {
 function onSubmit() {
     // alert($.cookie("username"));
     $('#wholewrapper').hide();
+
     if (checkInput()) {
         savePwd();
         var username = $("#inputStuNum").val();
@@ -79,12 +80,12 @@ function onSubmit() {
         var data = {};
         var captchaResult = '';
         changeBtn('disabled');
-        if (($("#not_auto").attr('class')).toString().indexOf("active") > -1) {
+        if (($("#not_auto").attr('class'))) {
             // 手动输入验证码
             captcha = $("#input_captcha");
             data = {"username": username, "password": password, "captcha": captcha.val()};
             // captchaResult = ajaxLogin(data);
-            $.when(ajaxLogin(data, 0)).done(function (captchaResult) {
+            $.when(ajaxLogin(data, -1)).done(function (captchaResult) {
                 if (captchaResult[0] == false) {
 
                     if (captchaResult[1] == "-1") {
@@ -105,18 +106,6 @@ function onSubmit() {
             });
         }
     else {
-            // var socket = io.connect("http://" + document.domain + ":" + location.port);
-            // socket.on("response",function (msg) {
-            //     console.log(msg);
-            //     var status = msg.status;
-            //     var values = msg.values + '%';
-            //     var bar = $("#progress_bar");
-            //     bar.css({"width": values});
-            //     bar.text(values)
-            // });
-            //
-            // socket.emit('autoCaptcha', {data: "start"});
-
             // 自动识别验证码
             initBar();
             var bar = $("#progress_bar");
@@ -141,31 +130,8 @@ function onSubmit() {
                     });
                 });
             });
-
-            // captchaResult =;
-            // if (captchaResult[0] == false) {
-            //     if (captchaResult[1] == "-2") {
-            //         alertShow("学号或密码错误", "danger");
-            //         changeBtn("active");
-            //         initBar();
-            //         return false;
-            //     }
-            // }
-            // else {
-            //     finishBar('success');
-            //     break;
-            // }
-            // if (i == 4) {
-            //     finishBar('danger');
-            //     alertShow("自动识别失败,请重试或手动输入", "danger");
-            //     changeBtn("active");
-            //     return false;
-            // }
-            // }
         }
-
-        // postForGrade(captchaResult[1]);
-        changeBtn("active");
+        // changeBtn("active");
 
     } else {
         return false;
@@ -183,10 +149,10 @@ function alertShow(info, type) {
     wrapper.fadeIn(100);
     setTimeout(function () {
         wrapper.fadeOut(200);
-    }, 3000);
+    }, 1500);
     setTimeout(function () {
         div.removeClass("alert-" + type);
-    }, 3200);
+    }, 1700);
 
 }
 
@@ -242,6 +208,7 @@ function ajaxLogin(data, i) {
                 var bar = $("#progress_bar");
                 bar.css({"width": values});
                 bar.text(values);
+                // changeBtn('disabled');
             },
             success: function (result) {
                 if (result.res == "false") {
@@ -258,7 +225,7 @@ function ajaxLogin(data, i) {
                     $.cookie("JID", result.JID);
                     $.cookie("name", result.nameLable);
                     finishBar('success');
-                    changeBtn("active");
+                    // changeBtn("active");
                     postForGrade(res[1]);
                     defer.reject(res);
                 }
@@ -315,9 +282,11 @@ function onGetSignature() {
 function postForGrade(data) {
     // data 为CSRF
     var year = $("#select_grade").val();
+    var isPE = $("#select_isPE").val();
+    var targetYear = $("#select_targetYear").val();
     setTimeout(function () {
-        window.location.href = "/gradeDetail?csrf=" + data+"&year="+year;
-    }, 2000);
+        window.location.href = "/gradeDetail?csrf="+data + "&year="+year + "&isPE="+isPE + "&targetYear="+targetYear;
+    }, 1000);
 }
 
 

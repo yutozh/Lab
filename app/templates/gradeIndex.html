@@ -26,17 +26,39 @@
                     </p>
                 </div>
             </div>
-            <form class="form-horizontal" role="form">
+            <form class="form-inline" role="form" id="form_head">
                 <div class="form-group">
                     <div id="div_grade">
                         <label for="select_grade" class="control-label">选择年级</label>
-                        <select class="input-sm" id="select_grade" name="select_grade">
-                            <option value="2013">2013级</option>
+                        <select class="form-control" id="select_grade" name="select_grade">
                             <option value="2014" selected>2014级</option>
                             <option value="2015">2015级</option>
+                            <option value="2016">2016级</option>
                         </select>
                     </div>
                 </div>
+                <div class="form-group">
+                    <div id="div_isPE">
+                        <label for="select_isPE" class="control-label">是否计算体育成绩</label>
+                        <select class="form-control" id="select_isPE" name="select_isPE">
+                            <option value="1" selected>计算</option>
+                            <option value="0">不计算</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div id="div_targetYear">
+                        <label for="select_targetYear" class="control-label">查询范围</label>
+                        <select class="form-control" id="select_targetYear" name="select_targetYear">
+                            <option value="2016" selected>2016年09月-2017年06月</option>
+                            <option value="2015">2015年09月-2016年06月</option>
+                            <option value="2014">2014年09月-2015年06月</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+
+            <form class="form-horizontal" role="form" id="form_middle">
                 <div class="form-group">
                     <label for="inputStuNum" class="col-sm-2 control-label">学号</label>
                     <div class="col-sm-8">
@@ -63,21 +85,17 @@
                 <span class="control-label" id="span_captcha">验证码</span>
             <div class="tabbable" id="tabs">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li class="active" role="presentation" id='not_auto'>
-                        <a href="#sdsr" data-toggle="tab" role="tab">手动输入</a>
-                    </li>
-                    <li role="presentation">
+                    <li class="active" role="presentation">
                         <a href="#zdsb" data-toggle="tab" role="tab">自动识别</a>
+                    </li>
+                    <li role="presentation" id='not_auto'>
+                        <a href="#sdsr" data-toggle="tab" role="tab">手动输入</a>
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane fade in active" id="sdsr" role="tabpanel">
-                        <img src="/image" width="120px" height="30px" id="img_captcha" onclick="changeCaptcha()">
-                        <input type="text" class="form-control" id="input_captcha" placeholder="点击图片更换...">
-                    </div>
-                    <div class="tab-pane fade" id="zdsb" role="tabpanel">
+                    <div class="tab-pane fade in active" id="zdsb" role="tabpanel">
                         <p id="p_auto">
-                            采用Tesseract-OCR提供的字符识别技术,单次识别成功率在30%左右. 考虑到服务器负载,每次提交系统至多将做5次尝试.
+                            采用基于神经网络的字符识别技术,单次识别成功率在50%以上. 考虑到服务器负载,每次提交系统至多将做5次尝试.
                         </p>
                         <p>当前成功率:{{ rate }}%</p>
                         <div class="progress active">
@@ -87,16 +105,19 @@
                             </div>
                         </div>
                     </div>
+                    <div class="tab-pane fade in" id="sdsr" role="tabpanel">
+                        <img src="/image" width="120px" height="30px" id="img_captcha" onclick="changeCaptcha()">
+                        <input type="text" class="form-control" id="input_captcha" placeholder="点击图片更换...">
+                    </div>
                 </div>
             </div>
             </div>
 
 
-
             <button type="button" class="btn btn-block btn-lg btn-info" onclick="onSubmit()" id="btn_submit">查询</button>
             <div class="div_foot">
                 <div>
-                    <p>结果仅供参考,如有任何问题请及时反映</p>
+                    <p>结果仅供参考,如有任何问题请联系管理员</p>
                     <p>Designed by ZYT. QQ:545023318</p>
                     <p>总访问量: {{ PV }}</p>
                 </div>

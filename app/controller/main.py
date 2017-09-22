@@ -71,6 +71,8 @@ def getDetail():
     name = request.cookies.get("name", '')
     csrf = request.args.get("csrf","")
     year = request.args.get('year','2014')
+    isPE = request.args.get('isPE',True)
+    targetYear = request.args.get('targetYear','2016')
     if csrf == '':
         return redirect("grade")
     try:
@@ -78,8 +80,19 @@ def getDetail():
     except:
         return redirect("grade")
 
+    if isPE == '1':
+        isPE = True
+    elif isPE == '0':
+        isPE = False
+    else:
+        return redirect("grade")
+
+    if targetYear not in ['2014','2015','2016']:
+        return redirect("grade")
+
     name = urllib.unquote(name).encode("ISO-8859-1", "ignore")  # url中文解码
-    gradeRes = parseGrade(MYcsrf=csrf, JID=JSESSIONID, username=username, name=name, year=year)
+    gradeRes = parseGrade(MYcsrf=csrf, JID=JSESSIONID, username=username, name=name,
+                          year=year, isPE=isPE, targetYear=targetYear)
 
 
     if len(gradeRes[1]) == 0:
@@ -96,9 +109,12 @@ def getDetail():
                             +name+'|'
                             +str(username)+'|'
                             +time.ctime(), pub_key).encode('base64')
+    gradeRes[1].reverse()
     return render_template("gradeResult.html", statistics=gradeRes[0],
                            grade=gradeRes[1], name=name, username=username,
-                           signature=str((signature)), PV=PV)
+                           signature=str((signature)), PV=PV,
+                           Bixiu=gradeRes[2][0],Zhuanxuan=gradeRes[2][1],
+                           Gongxuan=gradeRes[2][2],Fuxiu=gradeRes[2][3])
 
 @app.route('/gradeSubmit', methods=["POST"])
 def getGrade():
