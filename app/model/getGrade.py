@@ -200,8 +200,10 @@ def cal2(list, isPE, targetYear):
     for i in range(1, len(course) + 1):
         for j in range(32, 0, -1):
             if course[i - 1]["cost"] * 2 <= j:
-                matrix[j] = matrix[j - int(course[i - 1]["cost"] * 2)] + course[i - 1]["value"]
-                matrixChoose[i][j] = 1
+                temp = matrix[j - int(course[i - 1]["cost"] * 2)] + course[i - 1]["value"]
+                if(matrix[j]<temp):
+                    matrix[j] = temp
+                    matrixChoose[i][j] = 1
     sum2 += matrix[32]
 
     i = len(course)
