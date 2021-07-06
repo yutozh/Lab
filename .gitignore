@@ -91,3 +91,6 @@ ENV/
 # Rope project settings
 .ropeproject
 
+temp/file_doc/*
+temp/imgs/*
+
